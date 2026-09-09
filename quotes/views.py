@@ -22,3 +22,13 @@ def quote(request):
     }
 
     return render(request, template_name, context)
+
+def about(request):
+    template_name = "quotes/about.html"
+
+    return render(request, template_name)
+
+def show_all(request):
+    template_name = "quotes/show_all.html"
+
+    return render(request, template_name)
