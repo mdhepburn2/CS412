@@ -1,0 +1,14 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <nav>
+            <li><a href="{% url 'quote_page' %}">Quote</a></li>
+        </nav>
+        <!-- put page specific content here -->
+         {% block content %}
+         {% endblock %}
+    </body>
+</html>
