@@ -1,265 +1,170 @@
-body {
-    background-color: #fff;
-    color: slategray;
-    font-family: arial;
+/* ==========================================================================
+   Frank Ocean Quotes — "Blonde" themed stylesheet
+   Palette: white base with the soft pastel pink and green accents
+   from the Blonde album cover, plus near-black for text (echoing the
+   stark "Boys Don't Cry" wordmark).
+   ========================================================================== */
+
+:root {
+  --blonde-sky: #b7e0c8;      /* light pastel green accent */
+  --blonde-peach: #f2b9c4;    /* light pastel pink accent */
+  --blonde-blush: #fbe4e9;    /* pale pink, used for card surfaces */
+  --blonde-grey: #8a8a8a;     /* neutral grey for secondary text */
+  --blonde-ink: #1c1c1c;      /* near-black, for text/typography */
+  --blonde-cream: #ffffff;    /* white page background */
+
+  --font-body: 'Helvetica Neue', Arial, sans-serif;
 }
 
-h1,h2,h3,h4,h5{
-    font-weight: normal;
-    background:aliceblue;
-    margin: 0;
-}
-
-a, a:visited {
-    color: slategrey;
-    text-decoration: none;
-}
-
-a:hover {
-    color: darkblue;
-    text-decoration: none;
-    background-color: white;
-    /* font-weight: bold; */
+* {
+  box-sizing: border-box;
 }
 
 body {
-    max-width: 960px;
-    margin: 20px auto;
-    padding: 20px auto;
+  margin: 0;
+  padding: 0;
+  background-color: var(--blonde-cream);
+  color: var(--blonde-ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
 }
 
-header {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background:aliceblue;
-    position: fixed;
-    top: 0px;
-    z-index: 999;
-    /* padding-right: 50px auto; */
-}
-
-footer {
-    width: 100%;
-    background:aliceblue;
-    position: fixed;
-    bottom: 0px;
-}
-
-
-.wrapper {              /* centering and margin around whole wrapper element */
-    border: 2px solid;
-    max-width: 100%;
-    position: relative;
-    top: 50px;
-    scroll-padding-top: 100px;
-    /* scroll-padding-bottom: 100px; */
-    padding-bottom: 50px;
-    
-    /* top:100px; */
-    /* bottom: 100px; */
-}
-
-
-div.wrapper h1 {
-    text-align: center;
-    color: darkblue;
-    margin: 10px auto;
-    font-size: 2.4 em; 
-
-}
-
-div.wrapper h2 {
-    text-align: left;
-    color: darkblue;
-    margin: 5px auto;
-    font-size: 2 em; 
-}
-
-
-section {
-    border: 2px solid darkblue;    /* border around each event */
-    position: relative;
-    padding-bottom: 4px;
-}
-
+/* ---- Nav ---- */
 
 nav {
-    justify-self: end;
-    background: none;
-    color: darkblue;
-    /* border: 1px solid; */
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 1.5rem 1rem;
+  background-color: var(--blonde-sky);
+  list-style: none;
 }
 
 nav li {
-    display: inline-block;
-    margin-left: 20px;
+  list-style: none;
 }
 
-nav button {
-    background: none;
-    color: slategray;
-    font-family: Arial;
-    cursor: pointer; 
-    border: 0;
-    font-size: 1.2 em;
+nav a {
+  color: var(--blonde-ink);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
 }
 
-.mc-table {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
+nav a:hover {
+  color: var(--blonde-cream);
 }
 
+/* ---- Headings ---- */
 
-.mc-table-head {
-    border: 1px dashed darkblue;    /*border around each row */
-    display: table-row;
-    font-size: 1.2em;
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 2.5rem auto 1rem;
+  color: var(--blonde-ink);
 }
 
-.mc-table-head .detail {
-    display: table-cell;
-    color:darkblue;
-    font-weight: bold;
-    background-color: white;
-    padding: 5px;
-    position: relative;
-   
+h2 {
+  text-align: center;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--blonde-grey);
+  margin-bottom: 2rem;
 }
 
-.mc-table-row  {
-    display: table-row;
-    border: 1px dashed darkblue;    /*border around each row */
-    background-color: white;
+/* ---- Body copy (About page) ---- */
+
+p {
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+  padding: 0 1rem;
+  font-size: 1.05rem;
+  color: var(--blonde-ink);
 }
 
-
-.mc-table-row .detail {
-    color:darkblue;
-    display: table-cell;
-   
-    padding: 5px;
+p i {
+  color: var(--blonde-grey);
 }
 
-.mc-table-row .detail img {
-    max-height: 75px;
-    align-content: right;
+/* ---- Single quote page ---- */
+
+.quote-img {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
 }
 
-/* must have no space before :hover */
-.mc-table-row:hover {
-    background-color: aliceblue;    
-    border: 1px solid;
+.quote-img figure {
+  margin: 0;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--blonde-blush);
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(110, 122, 128, 0.35);
 }
 
-.site-form {
-    margin-top: 10px;
-    /* border: 2px solid darkblue; */
-    padding: 10px;
+.quote-img img {
+  width: 100%;
+  display: block;
+  border-radius: 2px;
+  filter: saturate(0.85) contrast(0.95); /* hazy, washed-out look */
 }
 
-/* style the forms with class site-form */
-.site-form input, .site-form textarea, .site-form select {
-    display: block;
-    margin: 5px 0 0 0;
-    padding: 5px;
+.quote-img figcaption {
+  margin-top: 1rem;
+  font-style: italic;
+  font-size: 1.1rem;
+  text-align: center;
+  color: var(--blonde-ink);
 }
 
-/* style the submit button ; didn't quite work?? */
-.site-form input [type="submit"] {
-    background: slategray;
-    border: 0;
-    color: fff;
-    font-size: 1.2em;
-    border-radius: 4px;
-    margin: 5px 0;
-}
-
-
-/* style the help text in the forms */
-.helptext, .helptext.ul {
-    margin-top: 0 auto;
-    bottom: 20px;
-    color: #bbb;
-    font-size: 0.9em;
-}
-
-/* style the error list in the forms validation */
-.errorlist li {
-    padding: 10px;
-    list-style-type: none;
-    border: 1px solid crimson;
-    color: crimson;
-    margin: 10px 0;
-}
-
-
-.errorlist {
-    padding: 0px;
-}
+/* ---- Image grid (Show all page) ---- */
 
 .image-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 12px;
+  gap: 1rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.image-grid-item {
+  background-color: var(--blonde-blush);
+  padding: 0.5rem;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px rgba(110, 122, 128, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.image-grid-item:hover {
+  transform: translateY(-4px);
 }
 
 .image-grid-item img {
   width: 100%;
-  height: 320px;       /* keeps rows even */
-  object-fit: cover;   /* crops instead of squashing */
-  border-radius: 6px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 2px;
   display: block;
+  filter: saturate(0.85) contrast(0.95);
 }
 
-.quote-img img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  /* Optional: prevents the image from overflowing small screens */
-  max-width: 100%; 
-  height: auto;
-  border-radius: 6px;
-}
-
-figure {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-figcaption {
-  margin-top: 6px;
-  font-size: 0.85rem;
-  color: #666;
-  text-align: center;
-}
-
-
-/* responsive styles when width is less than 1400px */
-@media screen and (max-width: 560px) {
-    header h1 {
-        size: 0.8em;
-    }
-
-    nav li {
-        display: block;
-        margin-left: 0px;
-        font-size: 14px;
-        width: 100%;
-    }
-    
-    nav button {
-        background: none;
-        color: slategray;
-        font-family: Arial;
-        cursor: pointer; 
-        border: 0;
-        font-size: 20px;
-    }
-    /* on mobile, display image as max 95% of available width*/
-    img {
-        max-width: 95%;
-    }
+/* Quotes listed below the grid on the "Show all" page */
+.image-grid + p,
+.image-grid ~ p {
+  max-width: 700px;
+  margin: 0 auto 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--blonde-peach);
+  font-style: italic;
+  color: var(--blonde-grey);
 }
