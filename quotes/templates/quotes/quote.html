@@ -1,6 +1,11 @@
 {% extends 'quotes/base.html' %}
     {% block content %}
-        <h1>Quote goes here</h1>
-        <img src={{img}} alt="">
-        <p>{{quote}}</p>
+        <h1>Frank Ocean Quotes</h1>
+        <div class="quote-img">
+            <figure>
+                <img src={{img}} alt="Frank Ocean">
+                <figcaption>{{quote}}</figcaption>
+            </figure>
+        </div>
+        <!-- <p>{{quote}}</p> -->
     {% endblock %}

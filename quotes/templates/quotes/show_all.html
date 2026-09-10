@@ -1,4 +1,15 @@
 {% extends 'quotes/base.html' %}
     {% block content %}
         <h1>Show all</h1>
+        <div class="image-grid">
+            {% for img in images %}
+                <div class="image-grid-item">
+                    <img src={{img}} alt="">
+                </div>
+            {% endfor %}
+        </div>
+        {% for quote in quotes %}
+            <p>{{quote}}</p>
+        {% endfor %}
+
     {% endblock %}
