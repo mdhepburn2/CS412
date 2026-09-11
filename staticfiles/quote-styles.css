@@ -1,0 +1,170 @@
+/* ==========================================================================
+   Frank Ocean Quotes — "Blonde" themed stylesheet
+   Palette: white base with the soft pastel pink and green accents
+   from the Blonde album cover, plus near-black for text (echoing the
+   stark "Boys Don't Cry" wordmark).
+   ========================================================================== */
+
+:root {
+  --blonde-sky: #b7e0c8;      /* light pastel green accent */
+  --blonde-peach: #f2b9c4;    /* light pastel pink accent */
+  --blonde-blush: #fbe4e9;    /* pale pink, used for card surfaces */
+  --blonde-grey: #8a8a8a;     /* neutral grey for secondary text */
+  --blonde-ink: #1c1c1c;      /* near-black, for text/typography */
+  --blonde-cream: #ffffff;    /* white page background */
+
+  --font-body: 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--blonde-cream);
+  color: var(--blonde-ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* ---- Nav ---- */
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 1.5rem 1rem;
+  background-color: var(--blonde-sky);
+  list-style: none;
+}
+
+nav li {
+  list-style: none;
+}
+
+nav a {
+  color: var(--blonde-ink);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: var(--blonde-cream);
+}
+
+/* ---- Headings ---- */
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 2.5rem auto 1rem;
+  color: var(--blonde-ink);
+}
+
+h2 {
+  text-align: center;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--blonde-grey);
+  margin-bottom: 2rem;
+}
+
+/* ---- Body copy (About page) ---- */
+
+p {
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+  padding: 0 1rem;
+  font-size: 1.05rem;
+  color: var(--blonde-ink);
+}
+
+p i {
+  color: var(--blonde-grey);
+}
+
+/* ---- Single quote page ---- */
+
+.quote-img {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.quote-img figure {
+  margin: 0;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--blonde-blush);
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(110, 122, 128, 0.35);
+}
+
+.quote-img img {
+  width: 100%;
+  display: block;
+  border-radius: 2px;
+  filter: saturate(0.85) contrast(0.95); /* hazy, washed-out look */
+}
+
+.quote-img figcaption {
+  margin-top: 1rem;
+  font-style: italic;
+  font-size: 1.1rem;
+  text-align: center;
+  color: var(--blonde-ink);
+}
+
+/* ---- Image grid (Show all page) ---- */
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.image-grid-item {
+  background-color: var(--blonde-blush);
+  padding: 0.5rem;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px rgba(110, 122, 128, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.image-grid-item:hover {
+  transform: translateY(-4px);
+}
+
+.image-grid-item img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 2px;
+  display: block;
+  filter: saturate(0.85) contrast(0.95);
+}
+
+/* Quotes listed below the grid on the "Show all" page */
+.image-grid + p,
+.image-grid ~ p {
+  max-width: 700px;
+  margin: 0 auto 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--blonde-peach);
+  font-style: italic;
+  color: var(--blonde-grey);
+}
