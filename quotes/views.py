@@ -23,6 +23,10 @@ quotes = [
 # Create your views here.
 
 def quote(request):
+    """
+    process request for quote page
+    img and quote context variables pick a random image/quote from the global arrays
+    """
     template_name = "quotes/quote.html"
 
     context = {
@@ -33,11 +37,16 @@ def quote(request):
     return render(request, template_name, context)
 
 def about(request):
+    """process request for about page"""
     template_name = "quotes/about.html"
 
     return render(request, template_name)
 
 def show_all(request):
+    """
+    process request for show_all page
+    passes the entire arrays as context so django can loop in html
+    """
     template_name = "quotes/show_all.html"
 
     context = {
