@@ -1,4 +1,35 @@
 {% extends 'restaurant/base.html' %}
     {% block content %}
         <h2>order</h2>
+        <form action="{% url 'confirmation' %}" method="POST">
+            {% csrf_token %}
+
+            <h3>Menu</h3>
+            <input type="checkbox" name="pizza" id="pizza"> Pizza $12
+                
+            <select name="pizza_topping" id="pizza_topping">
+                <option value="cheese">Cheese</option>
+                <option value="pepperoni">Pepperoni +$1</option>
+                <option value="sausage">Sausage +$1</option>
+                <option value="bbq_chicken">Barbecue Chicken +$3</option>
+            </select>
+
+            <input type="checkbox" name="lasagna"> Lasagna $13
+            <input type="checkbox" name="chicken_parmesan"> Chicken Parmesan $16
+            <input type="checkbox" name="tagliatelle_bolognese"> Tagliatelle Bolognese $15
+
+            <h3>Daily special:</h3>
+            <input type="checkbox" name="special"> {{special}} $20
+
+            <h3>Special instructions:</h3>
+            <textarea name="special_instructions"></textarea>
+
+            <h3>Customer Info:</h3>
+            Name: <input type="text" name="name">
+            Email: <input type="email" name="email">
+            Phone: <input type="tel" name="phone">
+
+            <input type="submit">
+
+        </form>
     {% endblock %}

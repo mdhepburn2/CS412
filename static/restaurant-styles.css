@@ -1,0 +1,7 @@
+#pizza_topping {
+    display: none;
+}
+
+#pizza:checked ~ #pizza_topping {
+    display: block;
+}
