@@ -1,4 +1,18 @@
 {% extends 'restaurant/base.html' %}
     {% block content %}
         <h2>confirmation</h2>
+        <p>Thank you, {{name}}</p>
+        <p>A reciept will be emailed to {{email}}</p>
+        <p>Your total is ${{total}}</p>
+
+        <h3>Reciept</h3>
+        {% for item in reciept %}
+            <p>{{item}}</p>
+        {% endfor %}
+
+        <h4>Special Instructions:</h4>
+        <p>{{special_instructions}}</p>
+
+        <p>order placed at {{current}}</p>
+        <p>order will be ready at {{ready}}</p>
     {% endblock %}

@@ -7,8 +7,28 @@ import random
 specials = [
     'Penne alla Vodka',
     'Cacio e Pepe',
-    'Spaghetti alla Carbonara'
+    'Spaghetti alla Carbonara',
 ]
+
+prices = {
+    'pizza': 12,
+    'lasagna': 13,
+    'chicken_parmesan': 16,
+    'tagliatelle_bolognese': 15,
+    'Cheese': 0,
+    'Pepperoni': 1,
+    'Sausage': 1,
+    'Barbecue Chicken': 3,
+    'special' : 20,
+}
+
+menu = {
+    'pizza': 'Pizza',
+    'lasagna': 'Lasagna',
+    'chicken_parmesan': 'Chicken Parmesan',
+    'tagliatelle_bolognese': 'Tagliatelle Bolognese',
+    'special' : 'Special',
+}
 
 # Create your views here.
 def main(request):
@@ -27,11 +47,39 @@ def order(request):
 
     return render(request, template_name, context)
 
-def submit(request):
+def confirmation(request):
     '''process form submission and generate result'''
     template_name = "restaurant/confirmation.html"
 
     if request.POST:
         print(request.POST)
+        #collect customer info
+        context = {
+            'name': request.POST.get('name'),
+            'email' : request.POST.get('email'),
+            'phone' : request.POST.get('phone'),
+            'special_instructions' : request.POST.get('special_instructions'),
+        }
 
-    return render(request, template_name)
+        #sum up total cost and add to reciept
+        reciept = []
+        sum = 0
+        for key in request.POST:
+            if prices.get(key) != None:
+                sum += prices[key]
+                if key == 'pizza':
+                    reciept.append(request.POST.get('pizza_topping') + ' Pizza')
+                else:
+                    reciept.append(menu[key])
+        sum += prices.get(request.POST.get('pizza_topping'))
+        context['total'] = sum
+        context['reciept'] = reciept
+
+        # calculate ready time
+        current = time.time()
+        context['current'] = time.ctime(current)
+        ready = time.ctime(current + (random.randint(30,60) * 60))
+        context['ready'] = ready
+    
+
+    return render(request, template_name, context)

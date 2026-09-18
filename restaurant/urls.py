@@ -6,5 +6,5 @@ urlpatterns = [
     path(r'main', views.main, name='main_page'),
     path(r'', views.main, name='main_page'),
     path(r'order', views.order, name='order_page'),
-    path(r'confirmation', views.submit, name='confirmation'),
+    path(r'confirmation', views.confirmation, name='confirmation'),
 ]
