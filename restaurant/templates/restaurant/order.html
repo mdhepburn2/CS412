@@ -5,8 +5,11 @@
             {% csrf_token %}
 
             <h3>Menu</h3>
-            <input type="checkbox" name="pizza" id="pizza"> Pizza $12
-                
+
+            <div class="menu-item">
+                <input type="checkbox" name="pizza" id="pizza">
+                <label for="pizza">Pizza $12</label>
+            </div>
             <select name="pizza_topping" id="pizza_topping">
                 <option value="Cheese">Cheese</option>
                 <option value="Pepperoni">Pepperoni +$1</option>
@@ -14,20 +17,41 @@
                 <option value="Barbecue Chicken">Barbecue Chicken +$3</option>
             </select>
 
-            <input type="checkbox" name="lasagna"> Lasagna $13
-            <input type="checkbox" name="chicken_parmesan"> Chicken Parmesan $16
-            <input type="checkbox" name="tagliatelle_bolognese"> Tagliatelle Bolognese $15
+            <div class="menu-item">
+                <input type="checkbox" name="lasagna" id="lasagna">
+                <label for="lasagna">Lasagna $13</label>
+            </div>
+            <div class="menu-item">
+                <input type="checkbox" name="chicken_parmesan" id="chicken_parmesan">
+                <label for="chicken_parmesan">Chicken Parmesan $16</label>
+            </div>
+            <div class="menu-item">
+                <input type="checkbox" name="tagliatelle_bolognese" id="tagliatelle_bolognese">
+                <label for="tagliatelle_bolognese">Tagliatelle Bolognese $15</label>
+            </div>
 
             <h3>Daily special:</h3>
-            <input type="checkbox" name="special"> {{special}} $20
+            <div class="menu-item">
+                <input type="checkbox" name="special" id="special">
+                <label for="special">{{special}} $20</label>
+            </div>
 
             <h3>Special instructions:</h3>
             <textarea name="special_instructions"></textarea>
 
             <h3>Customer Info:</h3>
-            Name: <input type="text" name="name">
-            Email: <input type="email" name="email">
-            Phone: <input type="tel" name="phone">
+            <div class="field-row">
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div class="field-row">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div class="field-row">
+                <label for="phone">Phone:</label>
+                <input type="tel" name="phone" id="phone">
+            </div>
 
             <input type="submit">
 
