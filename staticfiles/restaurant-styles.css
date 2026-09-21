@@ -1,0 +1,259 @@
+/* ==========================================================================
+   Restaurant site stylesheet
+   Primary colors: red and white, classic Italian-restaurant feel.
+   ========================================================================== */
+
+:root {
+  --brand-red: #b3121a;
+  --brand-red-dark: #8a0e14;
+  --brand-white: #ffffff;
+  --brand-cream: #fdf7f4;
+  --text-dark: #2a2a2a;
+  --border-light: #e6d6d3;
+
+  --font-body: 'Georgia', 'Times New Roman', serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--brand-cream);
+  color: var(--text-dark);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* ---- Nav ---- */
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 1rem;
+  background-color: var(--brand-red);
+  list-style: none;
+  margin: 0;
+}
+
+nav li {
+  list-style: none;
+}
+
+nav a {
+  color: var(--brand-white);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+nav a:hover {
+  opacity: 0.75;
+}
+
+/* ---- Headings ---- */
+
+h1 {
+  text-align: center;
+  font-size: 2.75rem;
+  color: var(--brand-red);
+  margin: 1.5rem auto 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+h2 {
+  text-align: center;
+  color: var(--brand-red-dark);
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
+h3 {
+  color: var(--brand-red-dark);
+  border-bottom: 2px solid var(--brand-red);
+  padding-bottom: 0.25rem;
+  margin-top: 1.5rem;
+}
+
+h4 {
+  color: var(--brand-red-dark);
+  margin-bottom: 0.25rem;
+}
+
+img {
+  display: block;
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  margin: 1rem auto;
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+dl {
+  max-width: 400px;
+  margin: 1rem auto 2rem;
+  text-align: center;
+}
+
+dt {
+  font-weight: bold;
+  color: var(--brand-red-dark);
+}
+
+dd {
+  margin: 0 0 0.75rem;
+}
+
+/* ---- Order form ---- */
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 1.5rem auto 3rem;
+  padding: 2rem;
+  background-color: var(--brand-white);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+form h3 {
+  width: 100%;
+  text-align: left;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.menu-item label {
+  flex: 1;
+  cursor: pointer;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--brand-red);
+  cursor: pointer;
+}
+
+#pizza_topping {
+  display: none;
+  width: 100%;
+  margin-left: 1.6rem;
+}
+
+.menu-item:has(#pizza:checked) + #pizza_topping {
+  display: block;
+}
+
+select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  font-family: inherit;
+  background-color: var(--brand-cream);
+  color: var(--text-dark);
+}
+
+textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.75rem;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.field-row label {
+  font-weight: bold;
+  color: var(--brand-red-dark);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"] {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 0.85rem;
+  margin-top: 0.5rem;
+  background-color: var(--brand-red);
+  color: var(--brand-white);
+  border: none;
+  border-radius: 4px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: var(--brand-red-dark);
+}
+
+/* ---- Confirmation page ---- */
+
+body > p,
+body > h4 {
+  max-width: 500px;
+  margin: 0.5rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+body > ul {
+  list-style: none;
+  max-width: 500px;
+  margin: 0.5rem auto 1rem;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+body > ul li {
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--border-light);
+}
+
+body > ul li:last-child {
+  border-bottom: none;
+}
