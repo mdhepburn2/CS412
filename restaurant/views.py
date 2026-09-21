@@ -58,22 +58,25 @@ def confirmation(request):
             'name': request.POST.get('name'),
             'email' : request.POST.get('email'),
             'phone' : request.POST.get('phone'),
-            'special_instructions' : request.POST.get('special_instructions'),
         }
+        if request.POST.get('special_instructions') == '':
+            context['special_instructions'] = 'None'
+        else:
+            context['special_instructions'] = request.POST.get['special_instructions']
 
-        #sum up total cost and add to reciept
-        reciept = []
+        #sum up total cost and add to receipt
+        receipt = []
         sum = 0
         for key in request.POST:
             if prices.get(key) != None:
                 sum += prices[key]
                 if key == 'pizza':
-                    reciept.append(request.POST.get('pizza_topping') + ' Pizza')
+                    receipt.append(request.POST.get('pizza_topping') + ' Pizza')
                 else:
-                    reciept.append(menu[key])
+                    receipt.append(menu[key])
         sum += prices.get(request.POST.get('pizza_topping'))
         context['total'] = sum
-        context['reciept'] = reciept
+        context['receipt'] = receipt
 
         # calculate ready time
         current = time.time()
