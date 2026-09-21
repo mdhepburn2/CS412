@@ -62,7 +62,7 @@ def confirmation(request):
         if request.POST.get('special_instructions') == '':
             context['special_instructions'] = 'None'
         else:
-            context['special_instructions'] = request.POST.get['special_instructions']
+            context['special_instructions'] = request.POST.get('special_instructions')
 
         #sum up total cost and add to receipt
         receipt = []
