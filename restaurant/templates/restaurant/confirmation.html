@@ -1,3 +1,10 @@
+<!--
+    File: confirmation.html
+    Author: Matthew Hepburn (mhepburn@bu.edu), 9/13/2026
+    Description: confirmation page for restaurant app that makes a reciept, total, and ready time using the formdata.
+-->
+
+
 {% extends 'restaurant/base.html' %}
     {% block content %}
         <h2>Confirmation</h2>
@@ -7,6 +14,7 @@
 
         <h3>Receipt</h3>
         <ul>
+            <!-- Loop through each item ordered from receipt list from context -->
             {% for item in receipt %}
                 <li>{{item}}</li>
             {% endfor %}

@@ -1,3 +1,10 @@
+<!--
+    File: order.html
+    Author: Matthew Hepburn (mhepburn@bu.edu), 9/13/2026
+    Description: order page for restaurant app where a user inputs their order and posts it to the confirmation page.
+-->
+
+
 {% extends 'restaurant/base.html' %}
     {% block content %}
         <form action="{% url 'confirmation' %}" method="POST">

@@ -1,3 +1,8 @@
+# File: views.py
+# Author: Matthew Hepburn, 9/13/2026
+# Description: views file that holds global data for the menu and 
+# performs logic/renders pages using menu context
+
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 import time
@@ -10,6 +15,7 @@ specials = [
     'Spaghetti alla Carbonara',
 ]
 
+#holds prices for each menu item
 prices = {
     'pizza': 12,
     'lasagna': 13,
@@ -22,6 +28,8 @@ prices = {
     'special' : 20,
 }
 
+
+#holds a properly written name for shorthand values
 menu = {
     'pizza': 'Pizza',
     'lasagna': 'Lasagna',
@@ -41,6 +49,7 @@ def order(request):
     '''process requests for order page'''
     template_name = "restaurant/order.html"
 
+    #pick a random daily special
     context = {
         'special': specials[random.randint(0,len(specials) - 1)]
     }
@@ -59,6 +68,7 @@ def confirmation(request):
             'email' : request.POST.get('email'),
             'phone' : request.POST.get('phone'),
         }
+        #if the user doesnt input any instructions, default to "none"
         if request.POST.get('special_instructions') == '':
             context['special_instructions'] = 'None'
         else:
@@ -70,6 +80,7 @@ def confirmation(request):
         for key in request.POST:
             if prices.get(key) != None:
                 sum += prices[key]
+                # if the user orders pizza, add string to name pizza properly
                 if key == 'pizza':
                     receipt.append(request.POST.get('pizza_topping') + ' Pizza')
                 else:
