@@ -7,16 +7,16 @@
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
-    <h1>All profiles</h1>
+    <h1 class="page-title">All profiles</h1>
     <!-- {{profiles}} -->
-    <div>
+    <div class="profile-grid">
+        <!-- loop over every profile -->
         {% for profile in profiles %}
         <div class="profile">
-            <a href="{% url 'show_profile' profile.pk %}"><img src={{profile.profile_image_url}} alt=""></a>
+            <a href="{% url 'show_profile' profile.pk %}"><img src="{{profile.profile_image_url}}" alt="{{profile.display_name}}'s profile photo"></a>
             <h2>{{profile.display_name}}</h2>
             <h3>@{{profile.username}}</h3>
         </div>
-        <hr>
         {% endfor %}
     </div>
 {% endblock %}
