@@ -4,11 +4,15 @@
     Description: Base page for mini insta app that holds the navagation.
 -->
 
+{% load static %}
+
 <html>
     <head>
         <title>Mini Insta</title>
+        <link rel="stylesheet" href="{% static 'insta-styles.css' %}">
     </head>
     <body>
+        <h1>Mini Insta</h1>
         {% block content %}
         {% endblock %}
     </body>

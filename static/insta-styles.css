@@ -1,0 +1,325 @@
+/*
+    File: insta-styles.css
+    Author: Matthew Hepburn (mhepburn@bu.edu), 9/29/2026
+    Description: Stylesheet for the mini insta app. White background with
+    light blue and yellow accents. The blue/yellow ring around profile photos
+    is the one bold element; everything else stays quiet.
+*/
+
+:root {
+  --ink: #262626;
+  --muted: #737373;
+  --hairline: #e6e6e6;
+
+  --blue: #1f74b5;
+  --blue-dark: #15578a;
+  --sky-edge: #c5e5f8;
+  --sun-tint: #fff6cf;
+  --sun-edge: #f1d76a;
+  --ring: conic-gradient(from 45deg, #8fd0f5, #ffd84d, #8fd0f5);
+
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #fff;
+}
+
+body {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 2rem;
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.5;
+}
+
+/* ---- Links ---- */
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--blue-dark);
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- Headings ---- */
+
+/* Page titles (e.g. "All profiles") */
+h1 {
+  margin: 2rem 0;
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Site title from base.html: first h1 on the page, top left */
+body > h1:first-of-type {
+  margin: 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--hairline);
+  text-align: left;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+/* Keeps the site title dark if it gets wrapped in a link later */
+body > h1:first-of-type a {
+  color: inherit;
+}
+
+h2,
+h3 {
+  margin: 0;
+}
+
+/* ---- Profile photos (used on both pages) ---- */
+
+.profile img,
+.profile-header img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  padding: 3px;
+  border: 4px solid transparent;
+  border-radius: 50%;
+  background: linear-gradient(#fff, #fff) padding-box, var(--ring) border-box;
+}
+
+/* ---- Show all profiles: photo grid ---- */
+
+/* The wrapper div around the profiles has no class, so target it by its contents */
+div:has(> .profile) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 200px));
+  justify-content: center;
+  gap: 2rem 1.25rem;
+}
+
+div:has(> .profile) > hr {
+  display: none;
+}
+
+.profile {
+  min-width: 0;
+  text-align: center;
+}
+
+.profile a {
+  display: block;
+  border-radius: 50%;
+}
+
+.profile a:hover {
+  text-decoration: none;
+}
+
+.profile h2 {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.profile h3 {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+/* ---- Show profile: one box holding photo, stats and bio ---- */
+
+/*
+   The header and body divs are made "invisible" with display: contents so
+   their children can all sit on one grid without changing the HTML.
+
+   Grid rows:
+     1  site title          6  bio
+     2  display name        7  join date (stretches to match photo height)
+     3  box padding (top)   8  box padding (bottom)
+     4  username            9  user posts (future)
+     5  stats boxes        10  footer
+
+   Columns: box padding | photo | gap | info | box padding
+   The outer box is drawn by body::before, spanning rows 3-8 and all columns.
+*/
+
+body:has(.profile-header) {
+  display: grid;
+  grid-template-columns: 1.5rem 200px 2rem minmax(0, 1fr) 1.5rem;
+  grid-template-rows: auto auto 1.5rem auto auto auto 1fr 1.5rem auto auto;
+}
+
+body:has(.profile-header)::before {
+  content: "";
+  grid-column: 1 / -1;
+  grid-row: 3 / 9;
+  border: 2px solid var(--sky-edge);
+  border-radius: 16px;
+}
+
+.profile-header,
+.profile-body {
+  display: contents;
+}
+
+body:has(.profile-header) > h1:first-of-type {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.profile-header h2 {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin: 1.5rem 0 1rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.profile-header img {
+  grid-column: 2;
+  grid-row: 4 / 8;
+  align-self: start;
+}
+
+.profile-header h3 {
+  grid-column: 4;
+  grid-row: 4;
+  align-self: start;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--blue);
+}
+
+/* Stats: three boxes inside the profile box */
+
+.account-numbers {
+  grid-column: 4;
+  grid-row: 5;
+  align-self: start;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.account-numbers p {
+  margin: 0;
+  padding: 0.7rem 0.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: var(--sun-tint);
+  border: 1px solid var(--sun-edge);
+  border-radius: 10px;
+}
+
+/* Optional markup: <p><strong>0</strong> Followers</p> stacks number over label */
+.account-numbers strong {
+  display: block;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.account-numbers p:has(strong) {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* Bio sits right under the stats */
+
+.profile-body > p {
+  grid-column: 4;
+  grid-row: 6;
+  max-width: 60ch;
+  margin: 1rem 0 0;
+}
+
+.account-age {
+  grid-column: 4;
+  grid-row: 7;
+  align-self: end;
+  margin-top: 1rem;
+}
+
+.account-age p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+/* Room for user posts below the box (wrap them in <div class="profile-posts">) */
+
+.profile-posts {
+  grid-column: 1 / -1;
+  grid-row: 9;
+  margin-top: 2rem;
+}
+
+/* ---- Footer ---- */
+
+footer {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+body:has(.profile-header) > footer {
+  grid-column: 1 / -1;
+  grid-row: 10;
+}
+
+/* ---- Small screens ---- */
+
+@media (max-width: 560px) {
+  body {
+    padding: 1rem 1rem 1.5rem;
+  }
+
+  body:has(.profile-header) {
+    grid-template-columns: 1rem 96px 1rem minmax(0, 1fr) 1rem;
+  }
+
+  .profile-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .profile-header img {
+    padding: 2px;
+    border-width: 3px;
+  }
+
+  .account-numbers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .account-numbers p {
+    flex: 1 1 auto;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.85rem;
+  }
+}
