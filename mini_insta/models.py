@@ -19,6 +19,10 @@ class Profile(models.Model):
         '''return a string representation of a profile'''
         return f'{self.display_name} ({self.username})'
 
+    def get_all_posts(self):
+            '''return the queryset of all posts for a user'''
+            return Post.objects.filter(profile=self).order_by('-timestamp')
+
 
 class Post(models.Model):
     '''Holds the data for a user post and references photos from db'''
@@ -31,6 +35,16 @@ class Post(models.Model):
     def __str__(self):
         '''return a string representation of a post'''
         return f'Post by {self.profile}: ({self.caption})'
+
+    def get_all_photos(self):
+        '''return queryset of all photos attached to a post'''
+
+        return Photo.objects.filter(post=self)
+
+    def get_first_photo(self):
+         '''return only the first photo for the not detailed view'''
+
+         return Photo.objects.filter(post=self).first()
 
 
 class Photo(models.Model):

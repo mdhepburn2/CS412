@@ -1,0 +1,23 @@
+<!--
+    File: show_post.html
+    Author: Matthew Hepburn (mhepburn@bu.edu), 10/1/2026
+    Description: Detailed view to show a post model
+-->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <div class="post-profile">
+        <!-- Show poster info -->
+        <a href="{% url 'show_profile' post.profile.pk %}"><img src="{{post.profile.profile_image_url}}" alt=""></a>
+        <a href="{% url 'show_profile' post.profile.pk %}"><h3>@{{post.profile.username}}</h3></a>
+    </div>
+
+    <div class="detail-post">
+        {% for photo in post.get_all_photos %}
+            <img src="{{photo.image_url}}" alt="">
+        {% endfor %}
+        <p>{{post.caption|linebreaksbr}}</p>
+        <div class="post-time">{{post.timestamp}}</div>
+    </div>
+{% endblock %}
