@@ -1,0 +1,23 @@
+<!--
+    File: create_post_form.html
+    Author: Matthew Hepburn (mhepburn@bu.edu), 10/1/2026
+    Description: form to create a new post
+-->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+    <h1>New Post by @{{profile.username}}</h1>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+            <strong>Image url</strong> <input type="url" name="image_url">
+        </table>
+
+        <input type="submit">
+        <a href="{% url 'show_profile' profile.pk%}">Cancel</a>
+    </form>
+
+{% endblock %}

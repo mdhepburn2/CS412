@@ -3,6 +3,7 @@
 # Description: holds the data for mini insta such as user profiles
 
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Profile(models.Model):
@@ -45,6 +46,10 @@ class Post(models.Model):
          '''return only the first photo for the not detailed view'''
 
          return Photo.objects.filter(post=self).first()
+
+    def get_absolute_url(self):
+         '''return the url to display one instance of this model'''
+         return reverse('show_post', kwargs={'pk':self.pk})
 
 
 class Photo(models.Model):
