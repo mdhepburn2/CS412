@@ -1,26 +1,45 @@
 /*
     File: insta-styles.css
     Author: Matthew Hepburn (mhepburn@bu.edu), 9/29/2026
-    Description: Stylesheet for the mini insta app. White background with
-    light blue and yellow accents. The blue/yellow ring around profile photos
-    is the one bold element; everything else stays quiet.
+    Description: Stylesheet for the mini insta app. White pages with light
+    blue and yellow accents. The blue/yellow ring around profile photos is
+    the one bold element; everything else stays quiet.
+
+    How the colors are used:
+      Blue     links, usernames, focus rings, the cancel button, and the shaded
+               cards with their outlines (profile box, forms, header/footer rules)
+      Yellow   highlights only: the photo ring, stat boxes, and the submit button
+      Neutral  body text (ink) and secondary text like dates and labels (muted)
+      Red      form errors only
+    Hover rule: ink turns blue, blue turns dark blue, yellow gets deeper.
 */
 
 :root {
-  --ink: #262626;
-  --muted: #737373;
-  --hairline: #e6e6e6;
+  /* Neutrals, cool-toned to sit with the blues */
+  --white: #fff;
+  --ink: #1f2933;
+  --muted: #5b6776;
 
-  --blue: #1f74b5;
-  --blue-dark: #15578a;
-  --sky-tint: #e8f4fc;
+  /* Blue family */
+  --sky: #8fd0f5;
   --sky-edge: #c5e5f8;
-  --sun-tint: #fff6cf;
+  --sky-tint: #e8f4fc;
+  --blue: #1b6aa5;
+  --blue-dark: #134f7d;
+
+  /* Yellow family */
+  --sun: #ffd84d;
+  --sun-deep: #f5c518;
   --sun-edge: #f1d76a;
-  --ring: conic-gradient(from 45deg, #8fd0f5, #ffd84d, #8fd0f5);
+  --sun-tint: #fff6cf;
+
+  /* Form errors only */
+  --danger: #b3261e;
+
+  --ring: conic-gradient(from 45deg, var(--sky), var(--sun), var(--sky));
 
   /* Fill between the photo and its ring; matches whatever the photo sits on */
-  --photo-gap: #fff;
+  --photo-gap: var(--white);
 
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
@@ -31,13 +50,13 @@
 }
 
 html {
-  background: #fff;
+  background: var(--white);
 }
 
 body {
   max-width: 880px;
   margin: 0 auto;
-  padding: 1.5rem 1.5rem 2rem;
+  padding: 1.5rem 1.5rem 5.5rem;
   color: var(--ink);
   font-family: var(--font);
   line-height: 1.5;
@@ -72,7 +91,7 @@ h3 {
 .site-title {
   margin: 0;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--sky-edge);
   text-align: left;
   font-size: 1.25rem;
   font-weight: 800;
@@ -88,8 +107,9 @@ h3 {
   text-decoration: none;
 }
 
-/* Page titles such as "All profiles" */
-.page-title {
+/* Page titles such as "All profiles" and "New Post by ..." */
+.page-title,
+h1:not(.site-title) {
   margin: 2rem 0;
   text-align: center;
   font-size: 1.75rem;
@@ -146,7 +166,7 @@ h3 {
 .profile h3 {
   font-size: 0.875rem;
   font-weight: 400;
-  color: var(--muted);
+  color: var(--blue);
   overflow-wrap: anywhere;
 }
 
@@ -264,6 +284,7 @@ h3 {
 
 .post-profile a:first-child {
   flex: none;
+  width: 48px;
   border-radius: 50%;
 }
 
@@ -274,7 +295,6 @@ h3 {
 .post-profile img {
   padding: 2px;
   border-width: 3px;
-  width: 72px;
 }
 
 .post-profile h3 {
@@ -320,21 +340,192 @@ h3 {
   color: var(--muted);
 }
 
-/* ---- Footer ---- */
+/* ---- Forms (create post) ---- */
+
+/* Centered card, same shaded look as the profile box */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background: var(--sky-tint);
+  border: 2px solid var(--sky-edge);
+  border-radius: 16px;
+}
+
+/* Django's form.as_table output: stack each label over its input */
+form table {
+  flex: 0 0 100%;
+}
+
+form table,
+form tbody,
+form tr,
+form th,
+form td {
+  display: block;
+  padding: 0;
+  text-align: center;
+}
+
+form tr {
+  margin-bottom: 1rem;
+}
+
+form tr:last-child {
+  margin-bottom: 0;
+}
+
+form th {
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+/* The image url label and input sit directly inside the form */
+form > strong {
+  flex: 0 0 100%;
+  margin-bottom: -0.65rem; /* pulls the label close to its input */
+  text-align: center;
+  font-weight: 600;
+}
+
+form > input[type="url"] {
+  flex: 0 0 100%;
+}
+
+form input[type="text"],
+form input[type="url"],
+form input[type="email"],
+form textarea,
+form select {
+  display: block;
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--sky-edge);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+}
+
+form textarea {
+  height: 9rem;
+  resize: vertical;
+}
+
+form input[type="text"]:focus,
+form input[type="url"]:focus,
+form input[type="email"]:focus,
+form textarea:focus,
+form select:focus {
+  border-color: var(--blue);
+  outline: 2px solid var(--blue);
+  outline-offset: 1px;
+}
+
+form .errorlist {
+  margin: 0 0 0.5rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  color: var(--danger);
+}
+
+form .helptext {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Submit and Cancel share the same size and shape; only the fill differs */
+form input[type="submit"],
+form a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 8rem;
+  height: 2.75rem;
+  margin-top: 0.5rem;
+  padding: 0 1.75rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+form input[type="submit"] {
+  background: var(--sun);
+  border-color: var(--sun);
+  color: var(--ink);
+}
+
+form input[type="submit"]:hover {
+  background: var(--sun-deep);
+  border-color: var(--sun-deep);
+}
+
+form a {
+  background: var(--white);
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+form a:hover {
+  background: var(--sky-tint);
+  border-color: var(--blue-dark);
+  color: var(--blue-dark);
+  text-decoration: none;
+}
+
+form input[type="submit"]:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ---- Footer: pinned to the bottom of the screen ---- */
 
 footer {
-  margin-top: 3rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--hairline);
-  text-align: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  padding: 0.9rem 1rem;
+  background: var(--white);
+  border-top: 1px solid var(--sky-edge);
   font-size: 0.9rem;
+}
+
+footer ul {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+footer a {
+  font-weight: 600;
 }
 
 /* ---- Small screens ---- */
 
 @media (max-width: 560px) {
   body {
-    padding: 1rem 1rem 1.5rem;
+    padding: 1rem 1rem 5.5rem;
+  }
+
+  form {
+    padding: 1rem;
   }
 
   .profile-name {

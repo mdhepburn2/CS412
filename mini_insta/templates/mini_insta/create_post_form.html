@@ -12,8 +12,11 @@
     <form action="" method="POST">
         {% csrf_token %}
         <table>
-            {{form.as_table}}
-            <strong>Image url</strong> <input type="url" name="image_url">
+            
+            <tr>
+                <strong>Image url: </strong> <input type="url" name="image_url">
+                {{form.as_table}}
+            </tr>
         </table>
 
         <input type="submit">
