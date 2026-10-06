@@ -4,7 +4,7 @@
 
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Profile, Post
+from .models import Profile, Post, Photo
 from .forms import CreatePostForm
 from django.urls import reverse
 
@@ -50,8 +50,15 @@ class CreatePostView(CreateView):
         #attach this article to the comment
         form.instance.profile = profile
 
+        # make the post object so we can attach the photos after
+        response = super().form_valid(form)
+
+        files = self.request.FILES.getlist('files') #iterate through all photo files from POST
+        for file in files:
+            Photo.objects.create(image_file=file,post = self.object)
+
         #delegate work to superclass method
-        return super().form_valid(form)
+        return response
 
     # def get_success_url(self):
     #     '''provide a url to redirect after making a new post'''

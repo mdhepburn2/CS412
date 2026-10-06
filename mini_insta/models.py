@@ -24,6 +24,11 @@ class Profile(models.Model):
             '''return the queryset of all posts for a user'''
             return Post.objects.filter(profile=self).order_by('-timestamp')
 
+    def get_num_posts(self):
+         '''return the number of posts a user has'''
+         posts = Post.objects.filter(profile=self)
+         return posts.count()
+
 
 class Post(models.Model):
     '''Holds the data for a user post and references photos from db'''
@@ -44,8 +49,9 @@ class Post(models.Model):
 
     def get_first_photo(self):
          '''return only the first photo for the not detailed view'''
+         first = Photo.objects.filter(post=self).first()
 
-         return Photo.objects.filter(post=self).first()
+         return first
 
     def get_absolute_url(self):
          '''return the url to display one instance of this model'''

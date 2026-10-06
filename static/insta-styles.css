@@ -8,7 +8,7 @@
     How the colors are used:
       Blue     links, usernames, focus rings, the cancel button, and the shaded
                cards with their outlines (profile box, forms, header/footer rules)
-      Yellow   highlights only: the photo ring, stat boxes, and the submit button
+      Yellow   pale highlights only: the photo ring, stat boxes, and the submit button
       Neutral  body text (ink) and secondary text like dates and labels (muted)
       Red      form errors only
     Hover rule: ink turns blue, blue turns dark blue, yellow gets deeper.
@@ -28,10 +28,10 @@
   --blue-dark: #134f7d;
 
   /* Yellow family */
-  --sun: #ffd84d;
-  --sun-deep: #f5c518;
-  --sun-edge: #f1d76a;
-  --sun-tint: #fff6cf;
+  --sun: #ffe88f;
+  --sun-deep: #ffdd66;
+  --sun-edge: #f3e29a;
+  --sun-tint: #fffae0;
 
   /* Form errors only */
   --danger: #b3261e;
@@ -380,6 +380,11 @@ form tr:last-child {
   margin-bottom: 0;
 }
 
+/* An empty row (like the one left around the file input) takes up no space */
+form tr:not(:has(*)) {
+  display: none;
+}
+
 form th {
   margin-bottom: 0.35rem;
   font-weight: 600;
@@ -393,13 +398,36 @@ form > strong {
   font-weight: 600;
 }
 
+form > input[type="file"],
 form > input[type="url"] {
   flex: 0 0 100%;
+}
+
+/* The "Choose files" button inside the file input matches the Cancel button */
+form input[type="file"]::file-selector-button {
+  margin-right: 0.75rem;
+  padding: 0 1.5rem;
+  height: 2.5rem;
+  border: 2px solid var(--blue);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--blue);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+form input[type="file"]::file-selector-button:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--white);
 }
 
 form input[type="text"],
 form input[type="url"],
 form input[type="email"],
+form input[type="file"],
 form textarea,
 form select {
   display: block;
@@ -412,6 +440,11 @@ form select {
   font: inherit;
 }
 
+/* Shifts the button and its status text together; must stay after the shared block above */
+form input[type="file"] {
+  padding-left: 4rem;
+}
+
 form textarea {
   height: 9rem;
   resize: vertical;
@@ -420,6 +453,7 @@ form textarea {
 form input[type="text"]:focus,
 form input[type="url"]:focus,
 form input[type="email"]:focus,
+form input[type="file"]:focus,
 form textarea:focus,
 form select:focus {
   border-color: var(--blue);

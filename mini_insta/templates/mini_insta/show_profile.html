@@ -20,7 +20,7 @@
                 <!-- will be implemented later -->
                 <p><strong>0</strong><span>Followers</span></p>
                 <p><strong>0</strong><span>Following</span></p>
-                <p><strong>0</strong><span>Posts</span></p>
+                <p><strong>{{profile.get_num_posts}}</strong><span>Posts</span></p>
             </div>
 
             <!-- linebreaksbr lets linebreaks in db entry show up in bio -->
@@ -37,7 +37,13 @@
          <!-- {{profile.get_all_posts}} -->
           <!-- Loop to display all posts -->
         {% for post in profile.get_all_posts %}
-            <a href="{% url 'show_post' post.pk %}"><img src="{{post.get_first_photo.get_image_url}}" alt=""></a>
+            <!-- check if the photo exists -->
+            {% if post.get_all_photos %}
+                <a href="{% url 'show_post' post.pk %}"><img src="{{post.get_first_photo.get_image_url}}" alt=""></a>
+            {% else %}
+                <a href="{% url 'show_post' post.pk %}"><img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt=""></a>
+            {% endif %}
+
         {% endfor %}
     </div>
 
