@@ -15,7 +15,7 @@
 
     <div class="detail-post">
         {% for photo in post.get_all_photos %}
-            <img src="{{photo.image_url}}" alt="">
+            <img src="{{photo.get_image_url}}" alt="">
         {% endfor %}
         <p>{{post.caption|linebreaksbr}}</p>
         <div class="post-time">{{post.timestamp}}</div>

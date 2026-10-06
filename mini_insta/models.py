@@ -57,10 +57,25 @@ class Photo(models.Model):
 
     #data attributes for a photo
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    image_url = models.URLField()
+    image_url = models.URLField(blank=True)
     timestamp = models.DateTimeField(auto_now=True)
+    image_file = models.ImageField(upload_to='insta_photos/',blank=True)
 
     def __str__(self):
         '''return a string representation of a photo'''
-        return f'Photo on {self.post} ({self.image_url})'
+        if self.image_url:
+            return f'Photo on {self.post} (image url)'
+        elif self.image_file:
+             return f'Photo on {self.post} (image upload)'
+        else:
+             return f'Photo on {self.post} (blank)'
+
+    def get_image_url(self):
+         '''returns the online image url or the local image url depending on where the photo is'''
+         if self.image_url:
+              return self.image_url
+         elif self.image_file:
+              return self.image_file.url
+         else: # no image found image
+              return 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original'
     

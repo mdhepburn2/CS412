@@ -37,7 +37,7 @@
          <!-- {{profile.get_all_posts}} -->
           <!-- Loop to display all posts -->
         {% for post in profile.get_all_posts %}
-            <a href="{% url 'show_post' post.pk %}"><img src="{{post.get_first_photo.image_url}}" alt=""></a>
+            <a href="{% url 'show_post' post.pk %}"><img src="{{post.get_first_photo.get_image_url}}" alt=""></a>
         {% endfor %}
     </div>
 
