@@ -20,7 +20,14 @@
                 <!-- will be implemented later -->
                 <p><strong>0</strong><span>Followers</span></p>
                 <p><strong>0</strong><span>Following</span></p>
-                <p><strong>{{profile.get_num_posts}}</strong><span>Posts</span></p>
+                <!-- check if user has 1 post for correct word -->
+                <p><strong>{{profile.get_num_posts}}</strong>
+                    {% if profile.get_num_posts == 1 %}
+                    <span>Post</span>
+                    {% else %}
+                    <span>Posts</span>
+                    {% endif %}
+                </p>
             </div>
 
             <!-- linebreaksbr lets linebreaks in db entry show up in bio -->
