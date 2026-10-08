@@ -60,10 +60,9 @@ class CreatePostView(CreateView):
         #delegate work to superclass method
         return response
 
-    # def get_success_url(self):
-    #     '''provide a url to redirect after making a new post'''
-    #     pk = self.kwargs['pk']
-    #     return reverse('show_post',kwargs={'pk':pk})
+    def get_success_url(self):
+        '''redirect to the post that was just created'''
+        return reverse('show_post', kwargs={'pk': self.object.pk})
 
     def get_context_data(self):
         '''add profile thats making a post to context'''
