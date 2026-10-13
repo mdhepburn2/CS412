@@ -115,3 +115,24 @@ class DeletePostView(DeleteView):
 
     model = Post
     template_name = 'mini_insta/delete_post_form.html'
+
+    def get_context_data(self, **kwargs):
+        '''add the post and profile to context'''
+        context = super().get_context_data(**kwargs) # added **kwargs to fix an error
+
+        pk = self.kwargs['pk']
+        post = Post.objects.get(pk=pk)
+        profile = post.profile
+
+        context['post'] = post
+        context['profile'] = profile
+
+        return context
+
+    def get_success_url(self):
+        '''return to the profile page after deletion'''
+        pk = self.kwargs['pk']
+        post = Post.objects.get(pk=pk)
+        profile = post.profile
+
+        return reverse('show_profile', kwargs={'pk' : profile.pk})

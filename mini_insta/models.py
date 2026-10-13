@@ -18,7 +18,7 @@ class Profile(models.Model):
 
     def __str__(self):
         '''return a string representation of a profile'''
-        return f'{self.display_name} ({self.username})'
+        return f'{self.display_name} (@{self.username})'
 
     def get_all_posts(self):
             '''return the queryset of all posts for a user'''
