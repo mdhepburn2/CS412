@@ -3,9 +3,9 @@
 # Description: views file that renders pages for insta views
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
-from .models import Profile, Post, Photo
-from .forms import CreatePostForm
+from django.views.generic import *
+from .models import *
+from .forms import *
 from django.urls import reverse
 
 # Create your views here.
@@ -73,3 +73,23 @@ class CreatePostView(CreateView):
 
         context['profile'] = profile
         return context
+
+
+class UpdateProfileView(UpdateView):
+    '''View to handle updating an existing profile's attributes'''
+
+    form_class = UpdateProfileForm
+    template_name = 'mini_insta/update_profile_form.html'
+    model = Profile
+
+    def get_context_data(self):
+        '''add profile being updated to context'''
+        context = super().get_context_data()
+
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)
+
+        context['profile'] = profile
+
+        return context
+

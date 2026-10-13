@@ -25,6 +25,10 @@
                     <li><a href="{% url 'show_all_profiles' %}">Show all</a></li>
                     {% if profile %}
                     <li><a href="{% url 'create_post' profile.pk %}">New post</a></li>
+                    <li><a href="{% url 'update_profile' profile.pk %}">Update profile</a></li>
+                    {% endif %}
+                    {% if post %}
+                    <li><a href="">Update post</a></li>
                     {% endif %}
                 </ul>
             </nav>

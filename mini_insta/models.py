@@ -29,6 +29,10 @@ class Profile(models.Model):
          posts = Post.objects.filter(profile=self)
          return posts.count()
 
+    def get_absolute_url(self):
+         '''return the url to display one instance of this model'''
+         return reverse('show_profile', kwargs={'pk' : self.pk})
+
 
 class Post(models.Model):
     '''Holds the data for a user post and references photos from db'''
