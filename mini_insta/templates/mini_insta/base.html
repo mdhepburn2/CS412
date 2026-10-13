@@ -28,7 +28,7 @@
                     <li><a href="{% url 'update_profile' profile.pk %}">Update profile</a></li>
                     {% endif %}
                     {% if post %}
-                    <li><a href="">Update post</a></li>
+                    <li><a href="{% url 'update_post' post.pk %}">Update post</a></li>
                     {% endif %}
                 </ul>
             </nav>

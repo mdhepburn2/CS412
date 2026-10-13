@@ -93,3 +93,25 @@ class UpdateProfileView(UpdateView):
 
         return context
 
+class UpdatePostView(UpdateView):
+    '''View to handle updating an existing post's attributes'''
+
+    form_class = UpdatePostForm
+    template_name = 'mini_insta/update_post_form.html'
+    model = Post
+
+    def get_context_data(self):
+        '''add post to context'''
+        context = super().get_context_data()
+
+        pk = self.kwargs['pk']
+        post = Post.objects.get(pk=pk)
+
+        context['post'] = post
+        return context
+
+class DeletePostView(DeleteView):
+    '''View class to delete a post'''
+
+    model = Post
+    template_name = 'mini_insta/delete_post_form.html'

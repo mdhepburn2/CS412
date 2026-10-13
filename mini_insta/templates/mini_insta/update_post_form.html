@@ -1,0 +1,26 @@
+<!--
+    File: update_post_form.html
+    Author: Matthew Hepburn (mhepburn@bu.edu), 10/13/2026
+    Description: form to update an existing post
+-->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+    <h1>Update post</h1>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            
+            <tr>
+                <strong>Select Photos </strong> <input type="file" name="files" multiple>
+                {{form.as_table}}
+            </tr>
+        </table>
+
+        <input type="submit">
+        <a href="{% url 'show_post' post.pk%}">Cancel</a>
+    </form>
+
+{% endblock %}
