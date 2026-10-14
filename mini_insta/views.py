@@ -143,3 +143,9 @@ class ShowFollowersDetailView(DetailView):
     model = Profile
     template_name = 'mini_insta/show_followers.html'
     context_object_name = 'profile'
+
+class ShowFollowingDetailView(DetailView):
+    '''view to show all following for one account'''
+    model = Profile
+    template_name = 'mini_insta/show_following.html'
+    context_object_name = 'profile'

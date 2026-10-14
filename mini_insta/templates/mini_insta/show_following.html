@@ -1,0 +1,28 @@
+<!--
+    File: show_following.html
+    Author: Matthew Hepburn (mhepburn@bu.edu), 10/14/2026
+    Description: template to show all following for a profile
+-->
+
+{% extends 'mini_insta/show_profile.html' %}
+
+{% block profile-content %}
+
+    <h2 class="follow-title">Following</h2>
+    <div class="follow-list">
+        <ul>
+            {% for following in profile.get_following %}
+            <li class="follow-item">
+                <a href="{% url 'show_profile' following.pk %}"><img src="{{following.profile_image_url}}" alt=""></a>
+                <div class="follow-info">
+                    <div class="follow-display-name">{{following.display_name}}</div>
+                    <div class="follow-username">
+                        <a href="{% url 'show_profile' following.pk %}">@{{following.username}}</a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+{% endblock %}

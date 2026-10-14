@@ -23,9 +23,16 @@
                     </strong>
                     <span>Followers</span>
                 </p>
-                <p><strong>0</strong><span>Following</span></p>
+                <p>
+                    <strong>
+                        <a href="{% url 'show_following' profile.pk %}">{{profile.get_num_following}}</a>
+                    </strong>
+                    <span>Following</span>
+                </p>
                 <!-- check if user has 1 post for correct word -->
-                <p><strong>{{profile.get_num_posts}}</strong>
+                <p><strong>
+                    <a href="{% url 'show_profile' profile.pk%}">{{profile.get_num_posts}}</a>
+                </strong>
                     {% if profile.get_num_posts == 1 %}
                     <span>Post</span>
                     {% else %}
@@ -43,19 +50,21 @@
         <p>User since {{profile.join_date}}</p>
     </div>
 
-    <div class="profile-posts">
-        <!-- user posts will go here -->
-         <!-- {{profile.get_all_posts}} -->
-          <!-- Loop to display all posts -->
-        {% for post in profile.get_all_posts %}
-            <!-- check if the photo exists -->
-            {% if post.get_all_photos %}
-                <a href="{% url 'show_post' post.pk %}"><img src="{{post.get_first_photo.get_image_url}}" alt=""></a>
-            {% else %}
-                <a href="{% url 'show_post' post.pk %}"><img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt=""></a>
-            {% endif %}
+    {% block profile-content %}
+        <div class="profile-posts">
+            <!-- user posts will go here -->
+            <!-- {{profile.get_all_posts}} -->
+            <!-- Loop to display all posts -->
+            {% for post in profile.get_all_posts %}
+                <!-- check if the photo exists -->
+                {% if post.get_all_photos %}
+                    <a href="{% url 'show_post' post.pk %}"><img src="{{post.get_first_photo.get_image_url}}" alt=""></a>
+                {% else %}
+                    <a href="{% url 'show_post' post.pk %}"><img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt=""></a>
+                {% endif %}
 
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
 
 {% endblock %}
