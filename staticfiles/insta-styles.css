@@ -121,7 +121,8 @@ h1:not(.site-title) {
 
 .profile img,
 .profile-card img,
-.post-profile img {
+.post-profile img,
+.follow-item img {
   display: block;
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -338,6 +339,66 @@ h1:not(.site-title) {
   grid-column: 1 / -1;
   font-size: 0.8rem;
   color: var(--muted);
+}
+
+/* ---- Show followers / show following ---- */
+
+/* Page heading, lined up with the poster info above it */
+.follow-title {
+  max-width: 640px;
+  margin: 1.5rem auto 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.follow-list ul {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+/* One row per account: small photo on the left, text on the right */
+.follow-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--sky-edge);
+}
+
+.follow-item:last-child {
+  border-bottom: 0;
+}
+
+.follow-item > a {
+  flex: none;
+  width: 56px;
+  border-radius: 50%;
+}
+
+.follow-item > a:hover {
+  text-decoration: none;
+}
+
+.follow-item img {
+  padding: 2px;
+  border-width: 3px;
+}
+
+/* Display name sits on top of the username */
+.follow-info {
+  min-width: 0;
+}
+
+.follow-display-name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.follow-username {
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
 }
 
 /* ---- Forms (create post) ---- */

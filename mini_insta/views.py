@@ -136,3 +136,10 @@ class DeletePostView(DeleteView):
         profile = post.profile
 
         return reverse('show_profile', kwargs={'pk' : profile.pk})
+
+
+class ShowFollowersDetailView(DetailView):
+    '''view to show all followers for one account'''
+    model = Profile
+    template_name = 'mini_insta/show_followers.html'
+    context_object_name = 'profile'

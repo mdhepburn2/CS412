@@ -10,7 +10,10 @@
     <div class="post-profile">
         <!-- Show poster info -->
         <a href="{% url 'show_profile' post.profile.pk %}"><img src="{{post.profile.profile_image_url}}" alt=""></a>
-        <a href="{% url 'show_profile' post.profile.pk %}"><h3>@{{post.profile.username}}</h3></a>
+        <span>
+            <strong>{{post.profile.display_name}}</strong>
+            <a href="{% url 'show_profile' post.profile.pk %}"><h3>@{{post.profile.username}}</h3></a>
+        </span>
     </div>
 
     <div class="detail-post">

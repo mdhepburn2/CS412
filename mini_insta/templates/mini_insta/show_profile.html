@@ -17,8 +17,12 @@
             <h3>@{{profile.username}}</h3>
 
             <div class="account-numbers">
-                <!-- will be implemented later -->
-                <p><strong>0</strong><span>Followers</span></p>
+                <p>
+                    <strong>
+                        <a href="{% url 'show_followers' profile.pk %}">{{profile.get_num_followers}}</a>
+                    </strong>
+                    <span>Followers</span>
+                </p>
                 <p><strong>0</strong><span>Following</span></p>
                 <!-- check if user has 1 post for correct word -->
                 <p><strong>{{profile.get_num_posts}}</strong>

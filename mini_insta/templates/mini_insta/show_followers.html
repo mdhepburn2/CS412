@@ -1,0 +1,36 @@
+<!--
+    File: show_followers.html
+    Author: Matthew Hepburn (mhepburn@bu.edu), 10/14/2026
+    Description: template to show all followers for a profile
+-->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <div class="post-profile">
+        <!-- Show poster info -->
+        <a href="{% url 'show_profile' profile.pk %}"><img src="{{profile.profile_image_url}}" alt=""></a>
+        <span>
+            <strong>{{profile.display_name}}</strong>
+            <a href="{% url 'show_profile' profile.pk %}"><h3>@{{profile.username}}</h3></a>
+        </span>
+    </div>
+    <h2 class="follow-title">@{{profile.username}}'s followers</h2>
+    <div class="follow-list">
+        <ul>
+            {% for follower in profile.get_followers %}
+            <li class="follow-item">
+                <a href="{% url 'show_profile' follower.pk %}"><img src="{{follower.profile_image_url}}" alt=""></a>
+                <div class="follow-info">
+                    <div class="follow-display-name">{{follower.display_name}}</div>
+                    <div class="follow-username">
+                        <a href="{% url 'show_profile' follower.pk %}">@{{follower.username}}</a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+{% endblock %}
