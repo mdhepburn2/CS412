@@ -11,11 +11,11 @@
     <div class="follow-list">
         <ul>
             {% for follower in profile.get_followers %}
-            <li class="follow-item">
+            <li class="follow-item user-row">
                 <a href="{% url 'show_profile' follower.pk %}"><img src="{{follower.profile_image_url}}" alt=""></a>
-                <div class="follow-info">
-                    <div class="follow-display-name">{{follower.display_name}}</div>
-                    <div class="follow-username">
+                <div class="user-row-info">
+                    <div class="user-row-name">{{follower.display_name}}</div>
+                    <div class="user-row-username">
                         <a href="{% url 'show_profile' follower.pk %}">@{{follower.username}}</a>
                     </div>
                 </div>

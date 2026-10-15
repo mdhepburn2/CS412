@@ -101,6 +101,10 @@ class Post(models.Model):
           '''return the url to display one instance of this model'''
           return reverse('show_post', kwargs={'pk':self.pk})
 
+     def get_all_comments(self):
+          '''returns all comments on this post'''
+          return Comment.objects.filter(post=self)
+
 
 class Photo(models.Model):
      '''Holds the data for a photo object'''
@@ -150,3 +154,15 @@ class Follow(models.Model):
      def __str__(self):
           '''return a string representation of a following relationship'''
           return f'@{self.follower_profile.username} follows @{self.profile.username}'
+
+class Comment(models.Model):
+     '''Object for a comment on a post'''
+
+     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+     profile = models.ForeignKey(Profile, on_delete=models.CASCADE) 
+     timestamp = models.DateTimeField(auto_now=True)
+     text = models.TextField(blank=False)
+
+     def __str__(self):
+          '''return a string representation of a comment'''
+          return f'Comment by {self.profile} on {self.post}: {self.text}'
