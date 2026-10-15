@@ -35,25 +35,27 @@
         <h3>Posts matching '{{query}}'</h3>
         
         {% for post in posts %}
-            <div class="feed user-row">
-                <a href="{% url 'show_profile' post.profile.pk %}"><img src="{{post.profile.profile_image_url}}" alt=""></a>
-                <div class="user-row-info">
-                    <div class="user-row-name">{{post.profile.display_name}}</div>
-                    <div class="user-row-username">
-                        <a href="{% url 'show_profile' post.profile.pk %}">@{{post.profile.username}}</a>
+            <div class="feed-post">
+                <div class="feed user-row">
+                    <a href="{% url 'show_profile' post.profile.pk %}"><img src="{{post.profile.profile_image_url}}" alt=""></a>
+                    <div class="user-row-info">
+                        <div class="user-row-name">{{post.profile.display_name}}</div>
+                        <div class="user-row-username">
+                            <a href="{% url 'show_profile' post.profile.pk %}">@{{post.profile.username}}</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <p class="comment-time">{{post.timestamp}}</p>
+                <p class="comment-time">{{post.timestamp}}</p>
 
-            {% if post.get_all_photos %}
-                    <a href="{% url 'show_post' post.pk %}"><img src="{{post.get_first_photo.get_image_url}}" alt=""></a>
-            {% else %}
-                <a href="{% url 'show_post' post.pk %}"><img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt=""></a>
-            {% endif %}
-            <p class="feed-likes"><strong>{{post.get_likes.count}}</strong> likes</p>
-            <p class="feed-comments"><strong>{{post.get_all_comments.count}}</strong> comments</p>
-            <p class="feed-caption">{{post.caption}}</p>
+                {% if post.get_all_photos %}
+                        <a href="{% url 'show_post' post.pk %}"><img src="{{post.get_first_photo.get_image_url}}" alt=""></a>
+                {% else %}
+                    <a href="{% url 'show_post' post.pk %}"><img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt=""></a>
+                {% endif %}
+                <p class="feed-likes"><strong>{{post.get_likes.count}}</strong> likes</p>
+                <p class="feed-comments"><strong>{{post.get_all_comments.count}}</strong> comments</p>
+                <p class="feed-caption">{{post.caption}}</p>
+            </div>
 
         {% empty %}
             <i>No posts</i>
