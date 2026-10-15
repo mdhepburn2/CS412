@@ -1,885 +1,249 @@
 /*
     File: insta-styles.css
     Author: Matthew Hepburn (mhepburn@bu.edu), 9/29/2026
-    Description: Stylesheet for the mini insta app. White pages with light
-    blue and yellow accents. The blue/yellow ring around profile photos is
-    the one bold element; everything else stays quiet.
+    Description: Stylesheet for the mini insta app. White pages with light blue
+    and yellow accents; the blue/yellow ring around profile photos is the one
+    bold element, everything else stays quiet.
 
-    How the colors are used:
-      Blue     links, usernames, focus rings, the cancel button, and the shaded
-               cards with their outlines (profile box, forms, header/footer rules)
-      Yellow   pale highlights only: the photo ring, stat boxes, and the submit button
-      Neutral  body text (ink) and secondary text like dates and labels (muted)
-      Red      form errors only
-    Hover rule: ink turns blue, blue turns dark blue, yellow gets deeper.
+    Blue     links, usernames, focus rings, Cancel button, shaded cards and outlines
+    Yellow   pale highlights only: photo ring, stat boxes, submit button
+    Neutral  ink for body text, muted for dates and labels
+    Red      form errors only
+    Hover    ink turns blue, blue turns dark blue, yellow gets deeper
 */
 
 :root {
-  /* Neutrals, cool-toned to sit with the blues */
-  --white: #fff;
-  --ink: #1f2933;
-  --muted: #5b6776;
-
-  /* Blue family */
-  --sky: #8fd0f5;
-  --sky-edge: #c5e5f8;
-  --sky-tint: #e8f4fc;
-  --blue: #1b6aa5;
-  --blue-dark: #134f7d;
-
-  /* Yellow family */
-  --sun: #ffe88f;
-  --sun-deep: #ffdd66;
-  --sun-edge: #f3e29a;
-  --sun-tint: #fffae0;
-
-  /* Form errors only */
+  --white: #fff; --ink: #1f2933; --muted: #5b6776;
+  --sky: #8fd0f5; --sky-edge: #c5e5f8; --sky-tint: #e8f4fc; --blue: #1b6aa5; --blue-dark: #134f7d;
+  --sun: #ffe88f; --sun-deep: #ffdd66; --sun-edge: #f3e29a; --sun-tint: #fffae0;
   --danger: #b3261e;
-
   --ring: conic-gradient(from 45deg, var(--sky), var(--sun), var(--sky));
-
-  /* Fill between the photo and its ring; matches whatever the photo sits on */
-  --photo-gap: var(--white);
-
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif;
+  --photo-gap: var(--white); /* fill between photo and ring; matches what the photo sits on */
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  background: var(--white);
-}
-
-body {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 1.5rem 1.5rem 5.5rem;
-  color: var(--ink);
-  font-family: var(--font);
-  line-height: 1.5;
-}
+* { box-sizing: border-box; }
+html { background: var(--white); }
+body { max-width: 880px; margin: 0 auto; padding: 1.5rem 1.5rem 5.5rem; color: var(--ink); font-family: var(--font); line-height: 1.5; }
 
 /* ---- Links ---- */
 
-a {
-  color: var(--blue);
-  text-decoration: none;
-}
+a { color: var(--blue); text-decoration: none; }
+a:hover { color: var(--blue-dark); text-decoration: underline; }
+a:focus-visible, form input[type="submit"]:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+a:focus-visible { border-radius: 4px; }
 
-a:hover {
-  color: var(--blue-dark);
-  text-decoration: underline;
-}
-
-a:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
+/* Photo links, the site title and form buttons never underline */
+.site-title a:hover, .profile a:hover, .post-profile a:hover, .user-row > a:hover,
+.feed-post > a:hover, form a:hover { text-decoration: none; }
 
 /* ---- Headings ---- */
 
-h2,
-h3 {
-  margin: 0;
+h2, h3 { margin: 0; }
+
+.site-title { margin: 0; padding-bottom: 1rem; border-bottom: 1px solid var(--sky-edge); text-align: left; font-size: 1.25rem; font-weight: 800; letter-spacing: -.01em; }
+.site-title a { color: inherit; }
+.site-title a:hover { color: var(--blue); }
+
+.page-title, h1:not(.site-title) { margin: 2rem 0; text-align: center; }
+.page-title, h1:not(.site-title), .profile-name { font-size: 1.75rem; font-weight: 700; letter-spacing: -.01em; }
+
+/* Section headings (comments, followers, search) */
+.follow-title, .comments h3, .search-profiles h3, .search-posts h3 { font-size: 1.25rem; font-weight: 700; }
+.comments h3, .search-profiles h3, .search-posts h3 { margin-bottom: .5rem; }
+
+/* ---- Shared pieces ---- */
+
+/* Shaded card: profile box and every form */
+.profile-card, form { padding: 1.5rem; background: var(--sky-tint); border: 2px solid var(--sky-edge); border-radius: 16px; }
+
+/* One centered column for the post, comments, followers and search pages */
+.post-profile, .detail-post, .likes, .comments, .follow-title, .follow-list ul, .search-profiles, .search-posts { max-width: 640px; margin-inline: auto; }
+
+/* Muted secondary text */
+.comment-time, .detail-post > .post-time, .account-age p, .account-numbers span, .feed-posts > i,
+.search-profiles > i, .search-posts > i, .feed-post > .feed-likes, .feed-post > .feed-comments { color: var(--muted); }
+
+.profile h2, .profile h3, .user-row-name, .user-row-username, .comment-text, .feed-post > .feed-caption { overflow-wrap: anywhere; }
+
+/* Profile photos: round with the blue/yellow ring */
+.profile img, .profile-card img, .post-profile img, .user-row img {
+  display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+  padding: 3px; border: 4px solid transparent; border-radius: 50%;
+  background: linear-gradient(var(--photo-gap), var(--photo-gap)) padding-box, var(--ring) border-box;
 }
+.post-profile img, .user-row img { padding: 2px; border-width: 3px; }
 
-/* Site title from base.html, top left */
-.site-title {
-  margin: 0;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--sky-edge);
-  text-align: left;
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-}
+.profile a, .post-profile a:first-child, .user-row > a { border-radius: 50%; }
 
-.site-title a {
-  color: inherit;
-}
+/* ---- Show all profiles ---- */
 
-.site-title a:hover {
-  color: var(--blue);
-  text-decoration: none;
-}
-
-/* Page titles such as "All profiles" and "New Post by ..." */
-.page-title,
-h1:not(.site-title) {
-  margin: 2rem 0;
-  text-align: center;
-  font-size: 1.75rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-/* ---- Profile photos (used on both pages) ---- */
-
-.profile img,
-.profile-card img,
-.post-profile img,
-.user-row img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  padding: 3px;
-  border: 4px solid transparent;
-  border-radius: 50%;
-  background: linear-gradient(var(--photo-gap), var(--photo-gap)) padding-box,
-    var(--ring) border-box;
-}
-
-/* ---- Show all profiles: photo grid ---- */
-
-.profile-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 200px));
-  justify-content: center;
-  gap: 2rem 1.25rem;
-}
-
-.profile {
-  min-width: 0;
-  text-align: center;
-}
-
-.profile a {
-  display: block;
-  border-radius: 50%;
-}
-
-.profile a:hover {
-  text-decoration: none;
-}
-
-.profile h2 {
-  margin-top: 0.75rem;
-  font-size: 1rem;
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
-
-.profile h3 {
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: var(--blue);
-  overflow-wrap: anywhere;
-}
+.profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 200px)); justify-content: center; gap: 2rem 1.25rem; }
+.profile { min-width: 0; text-align: center; }
+.profile a { display: block; }
+.profile h2 { margin-top: .75rem; font-size: 1rem; font-weight: 600; }
+.profile h3 { font-size: .875rem; font-weight: 400; }
+.profile h3, .profile-info h3 { color: var(--blue); }
 
 /* ---- Show profile ---- */
 
-.profile-name {
-  margin: 1.5rem 0 1rem;
-  font-size: 1.75rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-/* Shaded box holding the photo, username, stats and bio */
-.profile-card {
-  --photo-gap: var(--sky-tint);
-
-  display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
-  gap: 2rem;
-  align-items: start;
-  padding: 1.5rem;
-  background: var(--sky-tint);
-  border: 2px solid var(--sky-edge);
-  border-radius: 16px;
-}
-
-.profile-info h3 {
-  margin-bottom: 0.75rem;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--blue);
-}
+.profile-name { margin: 1.5rem 0 1rem; }
+.profile-card { --photo-gap: var(--sky-tint); display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 2rem; align-items: start; }
+.profile-info h3 { margin-bottom: .75rem; font-size: 1.1rem; font-weight: 500; }
+.profile-info .bio { max-width: 60ch; margin: 1rem 0 0; }
 
 /* Stats: three boxes inside the profile box */
-.account-numbers {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
-}
+.account-numbers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.account-numbers p { margin: 0; padding: .7rem .5rem; text-align: center; background: var(--sun-tint); border: 1px solid var(--sun-edge); border-radius: 10px; }
+.account-numbers strong { display: block; font-size: 1.35rem; line-height: 1.2; }
+.account-numbers span { display: block; font-size: .85rem; font-weight: 600; }
 
-.account-numbers p {
-  margin: 0;
-  padding: 0.7rem 0.5rem;
-  text-align: center;
-  background: var(--sun-tint);
-  border: 1px solid var(--sun-edge);
-  border-radius: 10px;
-}
+/* Join date sits just below the box */
+.account-age { margin-top: .75rem; }
+.account-age p { margin: 0; font-size: .875rem; }
 
-.account-numbers strong {
-  display: block;
-  font-size: 1.35rem;
-  line-height: 1.2;
-}
-
-.account-numbers span {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--muted);
-}
-
-.profile-info .bio {
-  max-width: 60ch;
-  margin: 1rem 0 0;
-}
-
-/* Join date sits just below the box, outside of it */
-.account-age {
-  margin-top: 0.75rem;
-}
-
-.account-age p {
-  margin: 0;
-  font-size: 0.875rem;
-  color: var(--muted);
-}
-
-/* User posts: equal square thumbnails in a grid below the profile box */
-.profile-posts {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-}
-
-.profile-posts a {
-  display: block;
-  border-radius: 6px;
-}
-
-.profile-posts img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 6px;
-  background: var(--sky-tint);
-}
-
-.profile-posts a:hover img {
-  opacity: 0.85;
-}
+/* Equal square thumbnails (profile page only) */
+.profile-posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; margin-top: 1.5rem; }
+.profile-posts a { display: block; border-radius: 6px; }
+.profile-posts img, .detail-post > img { display: block; width: 100%; border-radius: 6px; }
+.profile-posts img { aspect-ratio: 1 / 1; object-fit: cover; background: var(--sky-tint); }
+.profile-posts a:hover img, .feed-post > a:hover img { opacity: .85; }
 
 /* ---- Show post ---- */
 
-/* Poster info: small photo with the username beside it */
-.post-profile {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  max-width: 640px;
-  margin: 1.5rem auto 1rem;
-}
+.post-profile { display: flex; align-items: center; gap: .75rem; margin-block: 1.5rem 1rem; }
+.post-profile a:first-child { flex: none; width: 48px; }
+.post-profile h3 { font-size: 1rem; font-weight: 600; }
 
-.post-profile a:first-child {
-  flex: none;
-  width: 48px;
-  border-radius: 50%;
-}
+/* Photos, caption and timestamp are direct children; caption and timestamp span the grid */
+.detail-post { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; margin-block: 0; }
+.detail-post > img { height: auto; align-self: start; }
+.detail-post > img:only-of-type { grid-column: 1 / -1; } /* single photo goes full width */
+.detail-post > p, .detail-post > .post-time { grid-column: 1 / -1; }
+.detail-post > p { margin: .75rem 0 0; }
 
-.post-profile a:hover {
-  text-decoration: none;
-}
+.likes { margin-block: .75rem 0; }
+.likes p { margin: 0; font-size: .9rem; font-weight: 600; }
 
-.post-profile img {
-  padding: 2px;
-  border-width: 3px;
-}
+/* ---- User row (reusable) ----
+   .user-row > a > img, then .user-row-info with .user-row-name and .user-row-username.
+   Works on a div or li (followers, comment posters, search results). */
 
-.post-profile h3 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-}
+.user-row { display: flex; align-items: center; gap: .75rem; }
+.user-row > a { flex: none; width: 56px; }
+.user-row-info { min-width: 0; }
+.user-row-name { font-weight: 600; }
+.user-row-username { font-size: .875rem; }
 
-/*
-   Photos, caption and timestamp are all direct children of .detail-post.
-   The photos form the grid; the caption and timestamp span the full width
-   so they land underneath it, in that order.
-*/
-.detail-post {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.5rem;
-  max-width: 640px;
-  margin: 0 auto;
-}
+/* ---- Comments ---- */
 
-.detail-post > img {
-  display: block;
-  width: 100%;
-  height: auto;
-  align-self: start;
-  border-radius: 6px;
-}
+.comments { margin-block: 2rem 0; }
+.comment { align-items: flex-start; } /* must stay after .user-row */
+.comment .user-row-username a { font-weight: 600; }
+.comment-text, .comment-time { margin: .15rem 0 0; }
+.comment-time, .detail-post > .post-time { font-size: .8rem; }
 
-/* A post with a single photo shows it at full width */
-.detail-post > img:only-of-type {
-  grid-column: 1 / -1;
-}
+/* ---- Followers / following ---- */
 
-.detail-post > p {
-  grid-column: 1 / -1;
-  margin: 0.75rem 0 0;
-}
+.follow-title { margin-block: 1.5rem .5rem; }
+.follow-list ul { margin-block: 0; padding: 0; list-style: none; }
 
-.detail-post > .post-time {
-  grid-column: 1 / -1;
-  font-size: 0.8rem;
-  color: var(--muted);
-}
+/* Hairline between list rows */
+.comment, .follow-item, .search-profiles .search { padding: .75rem 0; }
+.comment:not(:last-child), .follow-item:not(:last-child), .search-profiles .search:not(:last-child) { border-bottom: 1px solid var(--sky-edge); }
 
-/* Likes line under the post, in the same column as the photos and comments */
-.likes {
-  max-width: 640px;
-  margin: 0.75rem auto 0;
-}
+/* ---- Feed and search result posts ----
+   Each post is a .feed-post: poster row on the photo's left edge, everything else
+   centered. Likes and comments share a row. */
 
-.likes p {
-  margin: 0;
-  font-size: 0.9rem;
-  font-weight: 600;
-}
+.feed-post { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem 1.5rem; max-width: 480px; margin: 0 auto; padding: 1.5rem 0; border-bottom: 1px solid var(--sky-edge); text-align: center; }
+.feed-post:first-of-type { padding-top: 0; }
+.feed-post:last-of-type { padding-bottom: 0; border-bottom: 0; }
+.feed-post > :is(.user-row, a, .comment-time, .feed-caption) { flex: 0 0 100%; }
+.feed-post > :is(.comment-time, .feed-caption, .feed-likes, .feed-comments) { margin: 0; }
+.feed-post > .user-row { text-align: left; }
+.feed-post > a { display: block; border-radius: 12px; }
+.feed-post > a img { display: block; width: 100%; height: auto; border-radius: 12px; background: var(--sky-tint); }
+.feed-post > .feed-likes, .feed-post > .feed-comments { flex: none; font-size: .9rem; }
+.feed-post strong { color: var(--ink); }
 
-/* ---- User row: reusable ---- */
-
-/*
-   Small ringed photo on the left, display name over username on the right.
-   Markup: .user-row > a > img, then .user-row-info holding .user-row-name
-   and .user-row-username. Works on a div or an li, so it can be used for
-   follower lists, comment posters, and so on.
-*/
-.user-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.user-row > a {
-  flex: none;
-  width: 56px;
-  border-radius: 50%;
-}
-
-.user-row > a:hover {
-  text-decoration: none;
-}
-
-.user-row img {
-  padding: 2px;
-  border-width: 3px;
-}
-
-.user-row-info {
-  min-width: 0;
-}
-
-.user-row-name {
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
-
-.user-row-username {
-  font-size: 0.875rem;
-  overflow-wrap: anywhere;
-}
-
-/* ---- Comments on a post ---- */
-
-/* Same column as the post above it */
-.comments {
-  max-width: 640px;
-  margin: 2rem auto 0;
-}
-
-.comments h3 {
-  margin-bottom: 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-/*
-   Each comment is a .user-row with a hairline between comments. The photo
-   lines up with the top of the text, since comments can run to several lines.
-   Must stay after the .user-row rules so it can override align-items.
-*/
-.comment {
-  align-items: flex-start;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--sky-edge);
-}
-
-.comment:last-child {
-  border-bottom: 0;
-}
-
-.comment .user-row-username a {
-  font-weight: 600;
-}
-
-.comment-text {
-  margin: 0.15rem 0 0;
-  overflow-wrap: anywhere;
-}
-
-.comment-time {
-  margin: 0.15rem 0 0;
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-/* ---- Show followers / show following ---- */
-
-/* Page heading, lined up with the poster info above it */
-.follow-title {
-  max-width: 640px;
-  margin: 1.5rem auto 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.follow-list ul {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-}
-
-/* List-only spacing: a hairline between rows (the row layout is .user-row) */
-.follow-item {
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--sky-edge);
-}
-
-.follow-item:last-child {
-  border-bottom: 0;
-}
-
-/* ---- Feed and search result posts ---- */
-
-/*
-   Each post is wrapped in .feed-post (show_feed.html and search_results.html).
-   Posts sit in a centered column, the same width as the show post page. The
-   profile row stays on the left edge of the photo and everything else is
-   centered. Likes and comments share a row because they are the only two
-   items that don't take the full width.
-*/
-.feed-post {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.6rem 1.5rem;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--sky-edge);
-  text-align: center;
-}
-
-.feed-post:first-of-type {
-  padding-top: 0;
-}
-
-.feed-post:last-of-type {
-  padding-bottom: 0;
-  border-bottom: 0;
-}
-
-/* Poster row: left edge lines up with the photo */
-.feed-post > .user-row {
-  flex: 0 0 100%;
-  text-align: left;
-}
-
-.feed-post > .comment-time {
-  flex: 0 0 100%;
-  margin: 0;
-}
-
-/* Photo link wraps the image, which gets rounded corners */
-.feed-post > a {
-  display: block;
-  flex: 0 0 100%;
-  border-radius: 12px;
-}
-
-.feed-post > a:hover {
-  text-decoration: none;
-}
-
-.feed-post > a img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  background: var(--sky-tint);
-}
-
-.feed-post > a:hover img {
-  opacity: 0.85;
-}
-
-/* Likes and comments side by side under the photo */
-.feed-post > .feed-likes,
-.feed-post > .feed-comments {
-  flex: none;
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-.feed-post strong {
-  color: var(--ink);
-}
-
-.feed-post > .feed-caption {
-  flex: 0 0 100%;
-  margin: 0;
-  overflow-wrap: anywhere;
-}
-
-/* "No posts" on the feed */
-.feed-posts > i {
-  display: block;
-  text-align: center;
-  color: var(--muted);
-}
+/* "No posts" messages */
+.feed-posts > i, .search-profiles > i, .search-posts > i { display: block; }
+.feed-posts > i { text-align: center; }
+.search-profiles > i, .search-posts > i { padding: .5rem 0; }
 
 /* ---- Search results ---- */
 
-/* Both sections share the feed's column; headings sit on its left edge */
-.search-profiles,
-.search-posts {
-  max-width: 640px;
-  margin: 0 auto 2rem;
-}
+.search-profiles, .search-posts { margin-block: 0 2rem; }
 
-.search-profiles h3,
-.search-posts h3 {
-  margin-bottom: 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
+/* ---- Forms ---- */
 
-/* Matching profiles: a hairline between rows (the row layout is .user-row) */
-.search-profiles .search {
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--sky-edge);
-}
-
-.search-profiles .search:last-child {
-  border-bottom: 0;
-}
-
-/* "No profiles" / "No posts" */
-.search-profiles > i,
-.search-posts > i {
-  display: block;
-  padding: 0.5rem 0;
-  color: var(--muted);
-}
-
-/* ---- Forms (create post) ---- */
-
-/* Centered card, same shaded look as the profile box */
-form {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 1.5rem;
-  background: var(--sky-tint);
-  border: 2px solid var(--sky-edge);
-  border-radius: 16px;
-}
+form { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; max-width: 480px; margin: 0 auto; }
 
 /* Django's form.as_table output: stack each label over its input */
-form table {
-  flex: 0 0 100%;
+form table, form tbody, form tr, form th, form td { display: block; padding: 0; text-align: center; }
+form tr:not(:last-child) { margin-bottom: 1rem; }
+form tr:not(:has(*)) { display: none; } /* empty row (e.g. around the file input) takes no space */
+form th { margin-bottom: .35rem; }
+form th, form > strong { font-weight: 600; }
+
+/* Image label and input sit directly inside the form */
+form > strong { margin-bottom: -.65rem; text-align: center; } /* pulls the label close to its input */
+form table, form > strong, form > input[type="file"], form > input[type="url"] { flex: 0 0 100%; }
+
+form :is(input[type="text"], input[type="url"], input[type="email"], input[type="file"], textarea, select) {
+  display: block; width: 100%; padding: .65rem .75rem; border: 1px solid var(--sky-edge);
+  border-radius: 8px; background: var(--white); color: var(--ink); font: inherit;
+}
+form input[type="file"] { padding-left: 4rem; } /* shifts the button and status text; must stay after the block above */
+form textarea { height: 9rem; resize: vertical; }
+form :is(input[type="text"], input[type="url"], input[type="email"], input[type="file"], textarea, select):focus {
+  border-color: var(--blue); outline: 2px solid var(--blue); outline-offset: 1px;
 }
 
-form table,
-form tbody,
-form tr,
-form th,
-form td {
-  display: block;
-  padding: 0;
-  text-align: center;
-}
+form .errorlist { margin: 0 0 .5rem; padding: 0; list-style: none; font-size: .875rem; color: var(--danger); }
+form .helptext { display: block; margin-top: .35rem; font-size: .8rem; color: var(--muted); }
 
-form tr {
-  margin-bottom: 1rem;
+/* Submit, Cancel and the file picker button share one shape */
+form input[type="submit"], form a, form input[type="file"]::file-selector-button {
+  border: 2px solid; border-radius: 999px; font: inherit; font-weight: 600; cursor: pointer;
 }
-
-form tr:last-child {
-  margin-bottom: 0;
+form input[type="submit"], form a {
+  display: inline-flex; align-items: center; justify-content: center; min-width: 8rem; height: 2.75rem;
+  margin-top: .5rem; padding: 0 1.75rem; line-height: 1.2; text-decoration: none;
 }
+form input[type="submit"] { background: var(--sun); border-color: var(--sun); color: var(--ink); }
+form input[type="submit"]:hover { background: var(--sun-deep); border-color: var(--sun-deep); }
+form a, form input[type="file"]::file-selector-button { background: var(--white); border-color: var(--blue); color: var(--blue); }
+form a:hover { background: var(--sky-tint); border-color: var(--blue-dark); color: var(--blue-dark); }
 
-/* An empty row (like the one left around the file input) takes up no space */
-form tr:not(:has(*)) {
-  display: none;
-}
+form input[type="file"]::file-selector-button { height: 2.5rem; margin-right: .75rem; padding: 0 1.5rem; transition: background .15s, border-color .15s, color .15s; }
+form input[type="file"]::file-selector-button:hover { background: var(--blue); border-color: var(--blue); color: var(--white); }
 
-form th {
-  margin-bottom: 0.35rem;
-  font-weight: 600;
-}
-
-/* The image url label and input sit directly inside the form */
-form > strong {
-  flex: 0 0 100%;
-  margin-bottom: -0.65rem; /* pulls the label close to its input */
-  text-align: center;
-  font-weight: 600;
-}
-
-form > input[type="file"],
-form > input[type="url"] {
-  flex: 0 0 100%;
-}
-
-/* The "Choose files" button inside the file input matches the Cancel button */
-form input[type="file"]::file-selector-button {
-  margin-right: 0.75rem;
-  padding: 0 1.5rem;
-  height: 2.5rem;
-  border: 2px solid var(--blue);
-  border-radius: 999px;
-  background: var(--white);
-  color: var(--blue);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
-}
-
-form input[type="file"]::file-selector-button:hover {
-  background: var(--blue);
-  border-color: var(--blue);
-  color: var(--white);
-}
-
-form input[type="text"],
-form input[type="url"],
-form input[type="email"],
-form input[type="file"],
-form textarea,
-form select {
-  display: block;
-  width: 100%;
-  padding: 0.65rem 0.75rem;
-  border: 1px solid var(--sky-edge);
-  border-radius: 8px;
-  background: var(--white);
-  color: var(--ink);
-  font: inherit;
-}
-
-/* Shifts the button and its status text together; must stay after the shared block above */
-form input[type="file"] {
-  padding-left: 4rem;
-}
-
-form textarea {
-  height: 9rem;
-  resize: vertical;
-}
-
-form input[type="text"]:focus,
-form input[type="url"]:focus,
-form input[type="email"]:focus,
-form input[type="file"]:focus,
-form textarea:focus,
-form select:focus {
-  border-color: var(--blue);
-  outline: 2px solid var(--blue);
-  outline-offset: 1px;
-}
-
-form .errorlist {
-  margin: 0 0 0.5rem;
-  padding: 0;
-  list-style: none;
-  font-size: 0.875rem;
-  color: var(--danger);
-}
-
-form .helptext {
-  display: block;
-  margin-top: 0.35rem;
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-/* Submit and Cancel share the same size and shape; only the fill differs */
-form input[type="submit"],
-form a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 8rem;
-  height: 2.75rem;
-  margin-top: 0.5rem;
-  padding: 0 1.75rem;
-  border: 2px solid transparent;
-  border-radius: 999px;
-  font: inherit;
-  font-weight: 600;
-  line-height: 1.2;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-form input[type="submit"] {
-  background: var(--sun);
-  border-color: var(--sun);
-  color: var(--ink);
-}
-
-form input[type="submit"]:hover {
-  background: var(--sun-deep);
-  border-color: var(--sun-deep);
-}
-
-form a {
-  background: var(--white);
-  border-color: var(--blue);
-  color: var(--blue);
-}
-
-form a:hover {
-  background: var(--sky-tint);
-  border-color: var(--blue-dark);
-  color: var(--blue-dark);
-  text-decoration: none;
-}
-
-form input[type="submit"]:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 3px;
-}
-
-/* ---- Search form (search.html) ---- */
-
-/* Same card as the other forms, but the box and button share one row */
-.search-form {
-  flex-wrap: nowrap;
-  gap: 0.5rem;
-  margin-top: 2rem;
-  padding: 1rem;
-}
-
-.search-form input[type="text"] {
-  flex: 1 1 0;
-  width: auto;
-  min-width: 0;
-  padding: 0.65rem 1.1rem;
-  border-radius: 999px;
-}
-
-.search-form input[type="submit"] {
-  flex: none;
-  align-self: stretch;
-  min-width: 0;
-  height: auto;
-  margin-top: 0;
-}
+/* Search form (search.html): box and button share one row */
+.search-form { flex-wrap: nowrap; gap: .5rem; margin-top: 2rem; padding: 1rem; }
+.search-form input[type="text"] { flex: 1 1 0; width: auto; min-width: 0; padding: .65rem 1.1rem; border-radius: 999px; }
+.search-form input[type="submit"] { flex: none; align-self: stretch; min-width: 0; height: auto; margin-top: 0; }
 
 /* ---- Footer: pinned to the bottom of the screen ---- */
 
-footer {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
-  padding: 0.9rem 1rem;
-  background: var(--white);
-  border-top: 1px solid var(--sky-edge);
-  font-size: 0.9rem;
-}
-
-footer ul {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-footer a {
-  font-weight: 600;
-}
+footer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; padding: .9rem 1rem; background: var(--white); border-top: 1px solid var(--sky-edge); font-size: .9rem; }
+footer ul { display: flex; justify-content: center; gap: 2rem; margin: 0; padding: 0; list-style: none; }
+footer a { font-weight: 600; }
 
 /* ---- Small screens ---- */
 
 @media (max-width: 560px) {
-  body {
-    padding: 1rem 1rem 5.5rem;
-  }
-
-  form {
-    padding: 1rem;
-  }
-
-  .profile-name {
-    font-size: 1.4rem;
-  }
+  body { padding: 1rem 1rem 5.5rem; }
+  .profile-card, form { padding: 1rem; }
+  .profile-name { font-size: 1.4rem; }
+  .profile-posts { gap: .25rem; }
 
   /* Photo and username share the top row; stats and bio use the full width */
-  .profile-card {
-    grid-template-columns: 96px minmax(0, 1fr);
-    grid-template-areas:
-      "photo username"
-      "stats stats"
-      "bio   bio";
-    gap: 1rem 1.25rem;
-    padding: 1rem;
-  }
-
-  .profile-info {
-    display: contents;
-  }
-
-  .profile-card img {
-    grid-area: photo;
-    padding: 2px;
-    border-width: 3px;
-  }
-
-  .profile-info h3 {
-    grid-area: username;
-    align-self: center;
-    margin: 0;
-  }
-
-  .account-numbers {
-    grid-area: stats;
-  }
-
-  .profile-info .bio {
-    grid-area: bio;
-    margin: 0;
-  }
-
-  .profile-posts {
-    gap: 0.25rem;
-  }
+  .profile-card { grid-template-columns: 96px minmax(0, 1fr); grid-template-areas: "photo username" "stats stats" "bio bio"; gap: 1rem 1.25rem; }
+  .profile-info { display: contents; }
+  .profile-card img { grid-area: photo; padding: 2px; border-width: 3px; }
+  .profile-info h3 { grid-area: username; align-self: center; margin: 0; }
+  .account-numbers { grid-area: stats; }
+  .profile-info .bio { grid-area: bio; margin: 0; }
 }
