@@ -155,3 +155,48 @@ class ShowFeedView(DetailView):
     model = Profile
     template_name = 'mini_insta/show_feed.html'
     context_object_name = 'profile'
+
+class SearchView(ListView):
+    '''View to input a search and display results'''
+    template_name = 'mini_insta/search_results.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        '''handles dispatch for requests'''
+        if 'query' in request.GET:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            pk = self.kwargs['pk']
+            profile = Profile.objects.get(pk=pk)
+            return render(request,template_name='mini_insta/search.html',context={'profile':profile})
+
+    def get_queryset(self):
+        '''returns all posts that match the query'''
+        query = self.request.GET.get('query')
+        return Post.objects.filter(caption__contains=query)
+
+    def get_context_data(self, **kwargs):
+        '''adds the profile making search, and query + results to the context if they exist'''
+        context = super().get_context_data(**kwargs)
+
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)
+        context['profile'] = profile
+
+        if 'query' in self.request.GET:
+            query = self.request.GET.get('query')
+            context['query'] = query
+
+            context['posts'] = self.get_queryset()
+
+            # get queryset of each match
+            userMatch = Profile.objects.filter(username__contains=query)
+            displayMatch = Profile.objects.filter(display_name__contains=query)
+            bioMatch = Profile.objects.filter(bio_text__contains=query)
+
+            # or them together and filter duplicates
+            profiles = userMatch | displayMatch | bioMatch
+            profiles = profiles.distinct()
+
+            context['profiles'] = profiles
+
+        return context

@@ -1,0 +1,16 @@
+<!--
+    File: search.html
+    Author: Matthew Hepburn (mhepburn@bu.edu), 10/15/2026
+    Description: Form to perform a search query
+-->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <form action="{% url 'search' profile.pk %}" method="GET">
+        <input type="text" name="query" placeholder="Search...">
+
+        <input type="submit" value="Search">
+    </form>
+
+{% endblock %}
