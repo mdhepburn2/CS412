@@ -21,7 +21,11 @@
                     <strong>
                         <a href="{% url 'show_followers' profile.pk %}">{{profile.get_num_followers}}</a>
                     </strong>
+                    {% if profile.get_num_followers == 1 %}
+                    <span>Follower</span>
+                    {% else %}
                     <span>Followers</span>
+                    {% endif %}
                 </p>
                 <p>
                     <strong>
