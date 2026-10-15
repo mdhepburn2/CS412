@@ -71,6 +71,15 @@ class Profile(models.Model):
 
           following = self.get_following()
           return len(following)
+
+     def get_post_feed(self):
+          '''
+          gets all posts from all accounts that self follows
+          orders with newest at top
+          '''
+          following = self.get_following()
+          posts = Post.objects.filter(profile__in=following).order_by('-timestamp')
+          return posts
          
 
 
