@@ -105,6 +105,10 @@ class Post(models.Model):
           '''returns all comments on this post'''
           return Comment.objects.filter(post=self)
 
+     def get_likes(self):
+          '''returns all like relations for a post'''
+          return Like.objects.filter(post=self)
+
 
 class Photo(models.Model):
      '''Holds the data for a photo object'''
@@ -166,3 +170,14 @@ class Comment(models.Model):
      def __str__(self):
           '''return a string representation of a comment'''
           return f'Comment by {self.profile} on {self.post}: {self.text}'
+
+class Like(models.Model):
+     '''relation showing a profile likes a post'''
+
+     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+     profile = models.ForeignKey(Profile, on_delete=models.CASCADE) 
+     timestamp = models.DateTimeField(auto_now=True)
+
+     def __str__(self):
+          '''string representation of a like'''
+          return f'{self.profile} likes {self.post}'

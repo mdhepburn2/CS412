@@ -341,6 +341,18 @@ h1:not(.site-title) {
   color: var(--muted);
 }
 
+/* Likes line under the post, in the same column as the photos and comments */
+.likes {
+  max-width: 640px;
+  margin: 0.75rem auto 0;
+}
+
+.likes p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 /* ---- User row: reusable ---- */
 
 /*

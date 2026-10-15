@@ -23,6 +23,15 @@
         <p>{{post.caption|linebreaksbr}}</p>
         <div class="post-time">{{post.timestamp}}</div>
     </div>
+    <div class="likes">
+        {% if post.get_likes.count == 1 %}
+            <p>Liked by <a href="{% url 'show_profile' post.get_likes.first.profile.pk %}">@{{post.get_likes.first.profile.username}}</a></p>
+        {% elif post.get_likes %}
+            <p>Liked by <a href="{% url 'show_profile' post.get_likes.first.profile.pk %}">@{{post.get_likes.first.profile.username}}</a> and {{post.get_likes.count | add:"-1"}} others</p>
+        {% else %}
+            <p>No likes yet</p>
+        {% endif %}
+    </div>
 
 
     <div class="comments">
