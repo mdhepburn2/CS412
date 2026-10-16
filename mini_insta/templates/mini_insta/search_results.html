@@ -7,11 +7,11 @@
 
 {% block content %}
 
-    <!-- <form action="{% url 'search' profile.pk %}" method="GET">
-        <input type="text" placeholder="Search...">
+    <form class="search-form" action="{% url 'search' profile.pk %}" method="GET">
+        <input type="text" name="query" placeholder="Search...">
 
         <input type="submit" value="Search">
-    </form> -->
+    </form>
 
     <h1>Search for {{query}}</h1>
 
@@ -52,8 +52,20 @@
                 {% else %}
                     <a href="{% url 'show_post' post.pk %}"><img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt=""></a>
                 {% endif %}
-                <p class="feed-likes"><strong>{{post.get_likes.count}}</strong> likes</p>
-                <p class="feed-comments"><strong>{{post.get_all_comments.count}}</strong> comments</p>
+                <p class="feed-likes"><strong>{{post.get_likes.count}}</strong> 
+                    {% if post.get_likes.count == 1%}
+                    like
+                    {% else %}
+                    likes
+                    {% endif %}
+                </p>
+                <p class="feed-comments"><strong>{{post.get_all_comments.count}}</strong> 
+                    {% if post.get_all_comments.count == 1%}
+                    comment
+                    {% else %}
+                    comments
+                    {% endif %}
+                </p>
                 <p class="feed-caption">{{post.caption}}</p>
             </div>
 
