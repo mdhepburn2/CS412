@@ -21,16 +21,29 @@
 
         <footer>
             <nav>
+                {% if request.user.is_authenticated %}
+                    <p>Logged in as: <a href="{% url 'show_user_profile' %}">@{{request.user}}</a></p>
+                {% else %}
+                    <p>Not logged in</p>
+                {% endif %}
                 <ul>
-                    {% if profile %}
-                    <li><a href="{% url 'show_feed' profile.pk %}">Feed</a></li>
-                    <li><a href="{% url 'create_post' profile.pk %}">New post</a></li>
-                    <li><a href="{% url 'update_profile' profile.pk %}">Update profile</a></li>
-                    <li><a href="{% url 'search' profile.pk %}">Search</a></li>
+                    {% if profile and profile.user == request.user %}
+                        <li><a href="{% url 'update_profile' %}">Update profile</a></li>
                     {% endif %}
-                    {% if post %}
-                    <li><a href="{% url 'update_post' post.pk %}">Update post</a></li>
-                    <li><a href="{% url 'delete_post' post.pk %}">Delete post</a></li>
+                    <li><a href="{% url 'search' %}">Search</a></li>
+                    <li><a href="{% url 'show_feed' %}">Feed</a></li>
+                    <li><a href="{% url 'create_post' %}">New post</a></li>
+                    {% if post and post.profile.user == request.user %}
+                        <li><a href="{% url 'update_post' post.pk %}">Update post</a></li>
+                        <li><a href="{% url 'delete_post' post.pk %}">Delete post</a></li>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        <form method="post" action="{% url 'logout' %}" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">Logout</button>
+                        </form>
+                    {% else %}
+                        <li><a href="{% url 'login' %}" class="login-button">Login</a></li>
                     {% endif %}
                 </ul>
             </nav>

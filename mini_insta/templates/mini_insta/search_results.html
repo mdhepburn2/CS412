@@ -7,7 +7,7 @@
 
 {% block content %}
 
-    <form class="search-form" action="{% url 'search' profile.pk %}" method="GET">
+    <form class="search-form" action="{% url 'search' %}" method="GET">
         <input type="text" name="query" placeholder="Search...">
 
         <input type="submit" value="Search">
