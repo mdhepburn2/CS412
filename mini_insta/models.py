@@ -121,6 +121,16 @@ class Post(models.Model):
           '''returns all like relations for a post'''
           return Like.objects.filter(post=self)
 
+     def get_like_profiles(self):
+          '''get all profiles that liked a post'''
+          profiles = []
+          likes = self.get_likes()
+
+          for like in likes:
+               profiles.append(like.profile)
+
+          return profiles
+
 
 class Photo(models.Model):
      '''Holds the data for a photo object'''

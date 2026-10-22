@@ -48,6 +48,14 @@
             <!-- linebreaksbr lets linebreaks in db entry show up in bio -->
             <p class="bio">{{profile.bio_text|linebreaksbr}}</p> 
         </div>
+        <!-- follow and unfollow buttons -->
+        {% if request.user.is_authenticated and request.user.profile != profile %}
+            {% if request.user.profile in profile.get_followers %}
+                <a href="{% url 'delete_follow' profile.pk %}">Unfollow</a>
+            {% else %}
+                <a href="{% url 'follow' profile.pk %}">Follow</a>
+            {% endif %}
+        {% endif %}
     </div>
 
     <div class="account-age">

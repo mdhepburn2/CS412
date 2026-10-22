@@ -7,6 +7,7 @@ from django.views.generic import *
 from .models import *
 from .forms import *
 from django.urls import reverse
+from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -270,3 +271,61 @@ class CreateProfileView(CreateView):
 
     def get_success_url(self):
         return reverse('show_user_profile')
+
+
+class NewLikeView(TemplateView):
+    '''class to make a new like'''
+    def dispatch(self, request, *args, **kwargs):
+        '''make the new like'''
+        pk = self.kwargs.get('pk')
+        post = Post.objects.get(pk=pk)
+        profile = Profile.objects.get(user=self.request.user)
+
+        newLike = Like.objects.create(post=post, profile=profile)
+
+        # redirect to same page so the url stays consistent
+        return redirect('show_post', pk=pk)
+
+class DeleteLikeView(TemplateView):
+    '''class to remove a like'''
+    def dispatch(self, request, *args, **kwargs):
+        '''remove the like'''
+        pk = self.kwargs.get('pk')
+        post = Post.objects.get(pk=pk)
+        profile = Profile.objects.get(user=self.request.user)
+
+        like = Like.objects.get(post=post,profile=profile)
+        like.delete()
+
+         # redirect to same page so the url stays consistent
+        return redirect('show_post', pk=pk)
+
+class NewFollowView(TemplateView):
+    '''class to make a new follow'''
+    def dispatch(self, request, *args, **kwargs):
+        '''make the new follow'''
+        pk = self.kwargs.get('pk')
+        profile = Profile.objects.get(pk=pk)
+
+        follower_profile = self.request.user.profile
+
+        newFollow = Follow.objects.create(profile=profile,follower_profile=follower_profile)
+
+
+         # redirect to same page so the url stays consistent
+        return redirect('show_profile', pk=pk)
+
+class DeleteFollowView(TemplateView):
+    '''class to remove a follow'''
+    def dispatch(self, request, *args, **kwargs):
+        '''remove the follow'''
+        pk = self.kwargs.get('pk')
+        profile = Profile.objects.get(pk=pk)
+
+        follower_profile = self.request.user.profile
+
+        oldFollow = Follow.objects.get(profile=profile,follower_profile=follower_profile)
+        oldFollow.delete()
+
+         # redirect to same page so the url stays consistent
+        return redirect('show_profile', pk=pk)

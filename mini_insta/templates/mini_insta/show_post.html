@@ -24,6 +24,16 @@
         <div class="post-time">{{post.timestamp}}</div>
     </div>
     <div class="likes">
+        <div class="like-button">
+            <!-- Logic for like button -->
+            {% if request.user.is_authenticated and request.user.profile != post.profile %}
+                {% if request.user.profile in post.get_like_profiles %}
+                    <a href="{% url 'delete_like' post.pk %}">Unlike</a>
+                {% else %}
+                    <a href="{% url 'like' post.pk %}">Like</a>
+                {% endif %}
+            {% endif %}
+        </div>
         {% if post.get_likes.count == 1 %}
             <p>Liked by <a href="{% url 'show_profile' post.get_likes.first.profile.pk %}">@{{post.get_likes.first.profile.username}}</a></p>
         {% elif post.get_likes %}
@@ -32,6 +42,7 @@
             <p>No likes yet</p>
         {% endif %}
     </div>
+    
 
 
     <div class="comments">
