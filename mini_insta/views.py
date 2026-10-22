@@ -8,6 +8,9 @@ from .models import *
 from .forms import *
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 
 
 class InstaLRM(LoginRequiredMixin):
@@ -230,3 +233,40 @@ class SearchView(InstaLRM, ListView):
             context['profiles'] = profiles
 
         return context
+
+
+class CreateProfileView(CreateView):
+
+    template_name = 'mini_insta/create_profile_form.html'
+    form_class = CreateProfileForm
+    model = Profile
+
+    def get_context_data(self, **kwargs):
+        '''add the usercreationform to context'''
+        context = super().get_context_data(**kwargs)
+        context['ucform'] = UserCreationForm
+
+        return context
+
+    def form_valid(self, form):
+        '''connect a newly created profile to user'''
+
+        # reconstruct the user from post
+        userform = UserCreationForm(self.request.POST)
+        if userform.is_valid():
+            user = userform.save()
+            login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+
+            # add the user username to profile username so they match
+            form.instance.username = self.request.POST.get('username')
+
+            # add user to profile
+            form.instance.user = user
+
+            return super().form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+
+    def get_success_url(self):
+        return reverse('show_user_profile')

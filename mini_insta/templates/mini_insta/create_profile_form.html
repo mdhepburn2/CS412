@@ -1,0 +1,23 @@
+<!--
+    File: create_profile_form.html
+    Author: Matthew Hepburn (mhepburn@bu.edu), 10/21/2026
+    Description: Form to create a new user account
+-->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+    
+    <h1>Register account</h1>
+
+    <form action="{% url 'create_profile' %}" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ucform.as_table}}
+            {{form.as_table}}
+        </table>
+        <input type="submit">
+    </form>
+    
+
+{% endblock %}
