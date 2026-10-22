@@ -329,3 +329,16 @@ class DeleteFollowView(TemplateView):
 
          # redirect to same page so the url stays consistent
         return redirect('show_profile', pk=pk)
+
+class NewCommentView(TemplateView):
+    '''class to make a new comment'''
+    def dispatch(self, request, *args, **kwargs):
+        '''make the comment and redirect'''
+        text = request.POST.get('comment_text')
+        pk = self.kwargs.get('pk')
+        post = Post.objects.get(pk=pk)
+        profile = request.user.profile
+
+        comment = Comment.objects.create(text=text,profile=profile,post=post)
+
+        return redirect('show_post', pk=pk)

@@ -47,6 +47,11 @@
 
     <div class="comments">
         <h3>Comments</h3>
+        <form action="{% url 'comment' post.pk %}" class="comment-form" method="POST">
+            {% csrf_token %}
+            <input type="text" placeholder="Leave a comment..." name="comment_text">
+            <input type="submit" value="Comment">
+        </form>
         {% if not post.get_all_comments %}
             <p>No comments yet</p>
         {% endif %}
@@ -58,7 +63,7 @@
                 <div class="user-row-info">
                     <div class="user-row-username">
                         <a href="{% url 'show_profile' comment.profile.pk%}">
-                            {{comment.profile.username}}   
+                            @{{comment.profile.username}}   
                         </a>
                     </div>
                     <p class="comment-text">{{comment.text}}</p>

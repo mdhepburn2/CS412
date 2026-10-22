@@ -115,7 +115,7 @@ class Post(models.Model):
 
      def get_all_comments(self):
           '''returns all comments on this post'''
-          return Comment.objects.filter(post=self)
+          return Comment.objects.filter(post=self).order_by('-timestamp')
 
      def get_likes(self):
           '''returns all like relations for a post'''

@@ -29,6 +29,7 @@ urlpatterns = [
 
     path(r'post/<int:pk>/like', NewLikeView.as_view(), name='like'),
     path(r'post/<int:pk>/delete_like', DeleteLikeView.as_view(), name='delete_like'),
+    path(r'post/<int:pk>/comment', NewCommentView.as_view(), name='comment'),
     
     path(r'login/', auth_views.LoginView.as_view(template_name='mini_insta/login.html'), name='login'),
     path(r'logout/', auth_views.LogoutView.as_view(next_page='show_all_profiles'), name='logout'),
