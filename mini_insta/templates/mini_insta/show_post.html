@@ -50,7 +50,7 @@
         {% if request.user.is_authenticated %}
             <form action="{% url 'comment' post.pk %}" class="comment-form" method="POST">
                 {% csrf_token %}
-                <input type="text" placeholder="Leave a comment..." name="comment_text">
+                <input type="text" placeholder="Leave a comment..." name="comment_text" required>
                 <input type="submit" value="Comment">
             </form>
         {% endif %}
