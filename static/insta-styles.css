@@ -145,6 +145,13 @@ h2, h3 { margin: 0; }
 .comment-text, .comment-time { margin: .15rem 0 0; }
 .comment-time, .detail-post > .post-time { font-size: .8rem; }
 
+/* Comment form: no card, so it reads as the first row of the list. Flush left with
+   the avatars below it, one row with a pill input and a small button, and a hairline
+   underneath like the rows. Overrides the general form styles further down. */
+.comment-form { flex-wrap: nowrap; justify-content: flex-start; gap: .5rem; max-width: none; margin: 0; padding: .25rem 0 .75rem; background: none; border: 0; border-bottom: 1px solid var(--sky-edge); border-radius: 0; }
+.comment-form input[type="text"] { flex: 1 1 0; width: auto; min-width: 0; padding: .5rem 1rem; border-radius: 999px; font-size: .95rem; }
+.comment-form input[type="submit"] { flex: none; min-width: 0; height: 2.25rem; margin-top: 0; padding: 0 1.1rem; font-size: .9rem; }
+
 /* ---- Followers / following ---- */
 
 .follow-title { margin-block: 1.5rem .5rem; }
