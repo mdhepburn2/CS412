@@ -51,9 +51,9 @@
         <!-- follow and unfollow buttons -->
         {% if request.user.is_authenticated and request.user.profile != profile %}
             {% if request.user.profile in profile.get_followers %}
-                <a href="{% url 'delete_follow' profile.pk %}">Unfollow</a>
+                <a class="action-button undo" href="{% url 'delete_follow' profile.pk %}">Unfollow</a>
             {% else %}
-                <a href="{% url 'follow' profile.pk %}">Follow</a>
+                <a class="action-button" href="{% url 'follow' profile.pk %}">Follow</a>
             {% endif %}
         {% endif %}
     </div>

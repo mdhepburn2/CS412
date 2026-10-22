@@ -28,9 +28,9 @@
             <!-- Logic for like button -->
             {% if request.user.is_authenticated and request.user.profile != post.profile %}
                 {% if request.user.profile in post.get_like_profiles %}
-                    <a href="{% url 'delete_like' post.pk %}">Unlike</a>
+                    <a class="heart-button liked" href="{% url 'delete_like' post.pk %}" title="Unlike"></a>
                 {% else %}
-                    <a href="{% url 'like' post.pk %}">Like</a>
+                    <a class="heart-button" href="{% url 'like' post.pk %}" title="Like"></a>
                 {% endif %}
             {% endif %}
         </div>

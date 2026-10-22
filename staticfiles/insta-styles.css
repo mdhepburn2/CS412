@@ -8,7 +8,7 @@
     Blue     links, usernames, focus rings, Cancel button, shaded cards and outlines
     Yellow   pale highlights only: photo ring, stat boxes, submit button
     Neutral  ink for body text, muted for dates and labels
-    Red      form errors only
+    Red      form errors, and the heart on posts you've liked
     Hover    ink turns blue, blue turns dark blue, yellow gets deeper
 */
 
@@ -17,6 +17,7 @@
   --sky: #8fd0f5; --sky-edge: #c5e5f8; --sky-tint: #e8f4fc; --blue: #1b6aa5; --blue-dark: #134f7d;
   --sun: #ffe88f; --sun-deep: #ffdd66; --sun-edge: #f3e29a; --sun-tint: #fffae0;
   --danger: #b3261e;
+  --heart: #e0245e; --heart-dark: #c01a4a;
   --ring: conic-gradient(from 45deg, var(--sky), var(--sun), var(--sky));
   --photo-gap: var(--white); /* fill between photo and ring; matches what the photo sits on */
   --sidebar: 15rem; /* width of the left nav */
@@ -230,6 +231,51 @@ form input[type="file"]::file-selector-button:hover { background: var(--blue); b
 .search-form input[type="text"] { flex: 1 1 0; width: auto; min-width: 0; padding: .65rem 1.1rem; border-radius: 999px; }
 .search-form input[type="submit"] { flex: none; align-self: stretch; min-width: 0; height: auto; margin-top: 0; }
 
+/* ---- Follow / Like buttons ----
+   Follow is a pill like the form buttons: yellow like Submit, and blue outline
+   (.undo) for Unfollow like Cancel. Like is a heart icon, see below. */
+
+.action-button {
+  display: inline-flex; align-items: center; justify-content: center; vertical-align: top;
+  min-width: 8rem; height: 2.5rem; margin: 0; padding: 0 1.5rem;
+  background: var(--sun); border: 2px solid var(--sun); border-radius: 999px;
+  color: var(--ink); font-weight: 600; line-height: 1.2; text-decoration: none;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.action-button:hover { background: var(--sun-deep); border-color: var(--sun-deep); color: var(--ink); text-decoration: none; }
+.action-button:focus-visible { border-radius: 999px; } /* a:focus-visible would square it off */
+
+.action-button.undo { background: var(--white); border-color: var(--blue); color: var(--blue); }
+.action-button.undo:hover { background: var(--sky-tint); border-color: var(--blue-dark); color: var(--blue-dark); }
+
+/* Follow: bottom of the profile box, under the bio, stretched to the same
+   width as the three stat boxes (they fill the info column too). The negative
+   margin trims the grid's row gap so it sits closer to the bio. */
+.profile-card > .action-button { grid-column: 2; justify-self: stretch; margin-top: -1rem; }
+
+/* Like: a heart to the left of the "Liked by" text. Outline until liked, then filled red. */
+.likes { display: flex; align-items: center; gap: .5rem; }
+.like-button:not(:has(a)) { display: none; } /* no heart for logged-out visitors or on your own post */
+
+.heart-button { display: inline-flex; margin-left: -.25rem; padding: .25rem; border-radius: 50%; color: var(--ink); line-height: 0; text-decoration: none; transition: color .15s; }
+.heart-button:hover { color: var(--heart); text-decoration: none; }
+.heart-button:focus-visible { border-radius: 50%; } /* a:focus-visible would square it off */
+
+/* The heart is drawn here, not in the HTML: an SVG used as a mask, filled with the link's color */
+.heart-button {
+  --heart-outline: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E");
+  --heart-filled: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E");
+}
+.heart-button::before {
+  content: ""; display: block; width: 28px; height: 28px; background: currentColor;
+  -webkit-mask: var(--heart-outline) center / contain no-repeat;
+  mask: var(--heart-outline) center / contain no-repeat;
+}
+
+.heart-button.liked { color: var(--heart); }
+.heart-button.liked::before { -webkit-mask-image: var(--heart-filled); mask-image: var(--heart-filled); }
+.heart-button.liked:hover { color: var(--heart-dark); } /* must stay after .heart-button.liked */
+
 /* ---- Sidebar nav: fixed on the left ----
    Account line on top, page links in the middle, Login/Logout pinned to the bottom.
    The logout form is a real form, so display: contents drops its card styling and
@@ -269,4 +315,7 @@ form input[type="file"]::file-selector-button:hover { background: var(--blue); b
   .profile-info h3 { grid-area: username; align-self: center; margin: 0; }
   .account-numbers { grid-area: stats; }
   .profile-info .bio { grid-area: bio; margin: 0; }
+
+  /* Follow button gets its own full-width row below the bio */
+  .profile-card > .action-button { grid-column: 1 / -1; margin-top: 0; }
 }
