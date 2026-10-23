@@ -21,7 +21,6 @@ class UpdateProfileForm(forms.ModelForm):
         model = Profile
         fields = [
             'display_name',
-            'profile_image_url',
             'bio_text'
         ]
 
@@ -43,6 +42,5 @@ class CreateProfileForm(forms.ModelForm):
         model = Profile
         fields = [
             'display_name',
-            'profile_image_url',
             'bio_text'
         ]

@@ -12,7 +12,7 @@
         <ul>
             {% for follower in profile.get_followers %}
             <li class="follow-item user-row">
-                <a href="{% url 'show_profile' follower.pk %}"><img src="{{follower.profile_image_url}}" alt=""></a>
+                <a href="{% url 'show_profile' follower.pk %}"><img src="{{follower.get_pfp_url}}" alt=""></a>
                 <div class="user-row-info">
                     <div class="user-row-name">{{follower.display_name}}</div>
                     <div class="user-row-username">

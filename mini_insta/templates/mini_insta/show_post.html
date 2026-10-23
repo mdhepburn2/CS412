@@ -9,7 +9,7 @@
 
     <div class="post-profile">
         <!-- Show poster info -->
-        <a href="{% url 'show_profile' post.profile.pk %}"><img src="{{post.profile.profile_image_url}}" alt=""></a>
+        <a href="{% url 'show_profile' post.profile.pk %}"><img src="{{post.profile.get_pfp_url}}" alt=""></a>
         <span>
             <strong>{{post.profile.display_name}}</strong>
             <a href="{% url 'show_profile' post.profile.pk %}"><h3>@{{post.profile.username}}</h3></a>
@@ -60,7 +60,7 @@
         {% for comment in post.get_all_comments %}
             <div class="user-row comment">
                 <a href="{% url 'show_profile' comment.profile.pk%}">
-                    <img src="{{comment.profile.profile_image_url}}" alt="">
+                    <img src="{{comment.profile.get_pfp_url}}" alt="">
                 </a>
                 <div class="user-row-info">
                     <div class="user-row-username">

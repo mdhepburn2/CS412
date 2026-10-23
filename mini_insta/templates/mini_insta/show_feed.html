@@ -15,7 +15,7 @@
         {% for post in profile.get_post_feed %}
             <div class="feed-post">
                 <div class="feed user-row">
-                    <a href="{% url 'show_profile' post.profile.pk %}"><img src="{{post.profile.profile_image_url}}" alt=""></a>
+                    <a href="{% url 'show_profile' post.profile.pk %}"><img src="{{post.profile.get_pfp_url}}" alt=""></a>
                     <div class="user-row-info">
                         <div class="user-row-name">{{post.profile.display_name}}</div>
                         <div class="user-row-username">

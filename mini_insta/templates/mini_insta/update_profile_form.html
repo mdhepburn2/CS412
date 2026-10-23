@@ -9,11 +9,12 @@
 {% block content %}
     <h1>Update @{{profile.username}}</h1>
 
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             {{form.as_table}}
         </table>
+        <strong>Profile Photo:</strong><input type="file" name="file">
 
         <input type="submit" value="Update">
         <a href="{% url 'show_profile' profile.pk%}">Cancel</a>

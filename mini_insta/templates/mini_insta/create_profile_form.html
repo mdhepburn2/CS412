@@ -10,12 +10,13 @@
     
     <h1>Register account</h1>
 
-    <form action="{% url 'create_profile' %}" method="POST">
+    <form action="{% url 'create_profile' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             {{ucform.as_table}}
             {{form.as_table}}
         </table>
+        <strong>Profile Photo:</strong><input type="file" name="file">
         <input type="submit" value="Create profile">
     </form>
     

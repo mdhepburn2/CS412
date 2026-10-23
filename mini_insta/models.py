@@ -13,9 +13,11 @@ class Profile(models.Model):
      #data attributes for a profile
      username = models.TextField()
      display_name = models.TextField(blank=True)
-     profile_image_url = models.URLField()
+     profile_image_url = models.URLField(blank=True)
      bio_text = models.TextField(blank=True)
      join_date = models.DateTimeField(auto_now=True)
+
+     profile_image_file = models.ImageField(blank=True, upload_to='insta_pfps')
 
      user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -83,7 +85,15 @@ class Profile(models.Model):
           following = self.get_following()
           posts = Post.objects.filter(profile__in=following).order_by('-timestamp')
           return posts
-         
+
+     def get_pfp_url(self):
+          '''get the url for the profile's pfp depending if its a file upload or image url'''
+          if self.profile_image_file:
+               return self.profile_image_file.url
+          elif self.profile_image_url:
+               return self.profile_image_url
+          else:
+               return 'https://i.pinimg.com/originals/d7/95/c3/d795c373a0539e64c7ee69bb0af3c5c3.jpg?nii=t'
 
 
 class Post(models.Model):

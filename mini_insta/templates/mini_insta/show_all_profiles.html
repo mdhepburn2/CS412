@@ -13,7 +13,7 @@
         <!-- loop over every profile -->
         {% for profile in profiles %}
         <div class="profile">
-            <a href="{% url 'show_profile' profile.pk %}"><img src="{{profile.profile_image_url}}" alt="{{profile.display_name}}'s profile photo"></a>
+            <a href="{% url 'show_profile' profile.pk %}"><img src="{{profile.get_pfp_url}}" alt="{{profile.display_name}}'s profile photo"></a>
             <h2>{{profile.display_name}}</h2>
             <h3>@{{profile.username}}</h3>
         </div>

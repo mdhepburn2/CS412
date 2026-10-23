@@ -122,6 +122,12 @@ class UpdateProfileView(InstaLRM, UpdateView):
             '''get the signed in user profile as the object'''
             return self.get_user_profile()
 
+    def form_valid(self, form):
+        '''add file update to form'''
+        if self.request.FILES.get('file'):
+            form.instance.profile_image_file = self.request.FILES.get('file')
+        return super().form_valid(form)
+
 class UpdatePostView(UpdateView):
     '''View to handle updating an existing post's attributes'''
 
@@ -254,6 +260,10 @@ class CreateProfileView(CreateView):
 
         # reconstruct the user from post
         userform = UserCreationForm(self.request.POST)
+
+        # find pfp file from post
+        if self.request.FILES.get('file'):
+            form.instance.profile_image_file = self.request.FILES.get('file')
         if userform.is_valid():
             user = userform.save()
             login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
