@@ -32,20 +32,26 @@ class VotersListView(ListView):
             if max_dob:
                 voters = voters.filter(date_of_birth__year__lte=int(max_dob))
 
+        if 'voter_score' in self.request.GET:
+            voter_score = self.request.GET.get('voter_score')
+            if voter_score:
+                voters = voters.filter(voter_score=voter_score)
+
         return voters
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         parties = ['U ','D ','R ','J ','A ','CC','X ','L ','Q ','S ','FF','G ','HH','T ','AA','GG','Z ','O ','P ','E ','V ','H ','Y ','W ','EE','K ']
-        
+
         years = [str(y) for y in range(1920,2005)]
         years.reverse()
 
+        scores = [str(i) for i in range(0,6)]
+
         context['parties'] = parties
         context['years'] = years
-
-
+        context['scores'] = scores
 
         # get the query minus page so its not lost on a page turn
         query = self.request.GET.copy()
