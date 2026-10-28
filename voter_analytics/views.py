@@ -3,6 +3,9 @@ from django.views.generic import ListView, DetailView
 from django.db.models.query import QuerySet
 from .models import Voter
 
+import plotly
+import plotly.graph_objs as go
+
 # Create your views here.
 
 class VotersListView(ListView):
@@ -82,3 +85,29 @@ class VoterDetailView(DetailView):
     model = Voter
     context_object_name = 'voter'
     template_name = 'voter_analytics/show_voter.html'
+
+
+class GraphView(ListView):
+    '''view to show graphs from aggregate data'''
+
+    model = Voter
+    context_object_name = 'voters'
+    template_name = 'voter_analytics/graphs.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        voters = self.get_queryset()
+        yearsX = [i for i in range(1916,2006)]
+        yearsY = [Voter.objects.filter(date_of_birth__year=i).count() for i in yearsX]
+
+        yearsBar = go.Bar(x=yearsX,y=yearsY)
+        title_text = f'Voter Distribution by Year of Birth (n = {voters.count()})'
+        yearsDiv = plotly.offline.plot({'data': [yearsBar],
+                                      "layout_title_text": title_text},
+                                      auto_open=False,
+                                      output_type='div')
+        context['bardiv'] = yearsDiv
+
+
+        return context
