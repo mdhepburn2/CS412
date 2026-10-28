@@ -8,8 +8,7 @@
 
 {% block content %}
     <div class="container">
-        <h1>Voters</h1>
-
+        
         <div class="filter">
             {% include 'voter_analytics/filter.html' %}
         </div>
@@ -34,6 +33,7 @@
             {% endif %}
         </div>
 
+        <h1>Voters</h1>
         <div class="row">
             <table>
                 <tr>
@@ -42,16 +42,16 @@
                     <th>Address</th>
 
                     <th>Date of Birth</th>
-                    <th>Date of Registration</th>
+                    <!-- <th>Date of Registration</th> -->
 
                     <th>Party Affiliation</th>
-                    <th>Precinct Number</th>
+                    <!-- <th>Precinct Number</th> -->
 
-                    <th>v20state</th>
+                    <!-- <th>v20state</th>
                     <th>v21town</th>
                     <th>v21primary</th>
                     <th>v22general</th>
-                    <th>v23town</th>
+                    <th>v23town</th> -->
                     <th>Voter Score</th>
                 </tr>
 
@@ -63,17 +63,17 @@
                     <td>{{ v.street_number }} {{ v.street_name | title }},{% if v.apartment_number %} Apt {{ v.apartment_number }},{% endif %} Newton, MA</td>
 
                     <td>{{ v.date_of_birth }}</td>
-                    <td>{{ v.date_of_registration }}</td>
+                    <!-- <td>{{ v.date_of_registration }}</td> -->
 
                     <td>{{ v.party_affiliation }}</td>
-                    <td>{{ v.precinct_number }}</td>
+                    <!-- <td>{{ v.precinct_number }}</td> -->
 
                     <!-- |yesno: formats the true false for better readability -->
-                    <td>{{ v.v20state|yesno:"Yes,No" }}</td>
+                    <!-- <td>{{ v.v20state|yesno:"Yes,No" }}</td>
                     <td>{{ v.v21town|yesno:"Yes,No" }}</td>
                     <td>{{ v.v21primary|yesno:"Yes,No" }}</td>
                     <td>{{ v.v22general|yesno:"Yes,No" }}</td>
-                    <td>{{ v.v23town|yesno:"Yes,No" }}</td>
+                    <td>{{ v.v23town|yesno:"Yes,No" }}</td> -->
                     <td>{{ v.voter_score }}</td>
                 </tr>
                 {% endfor %}
