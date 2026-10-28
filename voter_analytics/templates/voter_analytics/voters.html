@@ -10,12 +10,16 @@
     <div class="container">
         <h1>Voters</h1>
 
+        <div class="filter">
+            {% include 'voter_analytics/filter.html' %}
+        </div>
+
         <div class="pages">
             {% if is_paginated %}
             <nav class="pagination" aria-label="Page navigation">
             {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; First</a>
-                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                <a href="?{% if querystring %}{{querystring}}&{% endif %}page=1">&laquo; First</a>
+                <a href="?{% if querystring %}{{querystring}}&{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>
             {% endif %}
 
             <span class="current">
@@ -23,8 +27,8 @@
             </span>
 
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">Next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                <a href="?{% if querystring %}{{querystring}}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
+                <a href="?{% if querystring %}{{querystring}}&{% endif %}page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
             {% endif %}
             </nav>
             {% endif %}
