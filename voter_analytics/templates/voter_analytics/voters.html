@@ -1,0 +1,86 @@
+<!--
+    File: voters.html
+    Author: Matthew Hepburn (mhepburn@bu.edu), 10/27/2026
+    Description: template to show the registered voters
+-->
+
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Voters</h1>
+
+        <div class="pages">
+            {% if is_paginated %}
+            <nav class="pagination" aria-label="Page navigation">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; First</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
+            </nav>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <table>
+                <tr>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+
+                    <th>Street Number</th>
+                    <th>Street Name</th>
+                    <th>Apartment Number</th>
+                    <th>Zip Code</th>
+
+                    <th>Date of Birth</th>
+                    <th>Date of Registration</th>
+
+                    <th>Party Affiliation</th>
+                    <th>Precinct Number</th>
+
+                    <th>v20state</th>
+                    <th>v21town</th>
+                    <th>v21primary</th>
+                    <th>v22general</th>
+                    <th>v23town</th>
+                    <th>Voter Score</th>
+                </tr>
+
+                {% for v in voters %}
+                <tr>
+                    <td>{{ v.last_name }}</td>
+                    <td>{{ v.first_name }}</td>
+
+                    <td>{{ v.street_number }}</td>
+                    <td>{{ v.street_name }}</td>
+                    <td>{{ v.apartment_number }}</td>
+                    <td>{{ v.zip_code }}</td>
+
+                    <td>{{ v.date_of_birth }}</td>
+                    <td>{{ v.date_of_registration }}</td>
+
+                    <td>{{ v.party_affiliation }}</td>
+                    <td>{{ v.precinct_number }}</td>
+
+                    <!-- |yesno: formats the true false for better readability -->
+                    <td>{{ v.v20state|yesno:"Yes,No" }}</td>
+                    <td>{{ v.v21town|yesno:"Yes,No" }}</td>
+                    <td>{{ v.v21primary|yesno:"Yes,No" }}</td>
+                    <td>{{ v.v22general|yesno:"Yes,No" }}</td>
+                    <td>{{ v.v23town|yesno:"Yes,No" }}</td>
+                    <td>{{ v.voter_score }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
