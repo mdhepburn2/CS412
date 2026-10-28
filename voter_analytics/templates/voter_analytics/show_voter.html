@@ -33,7 +33,7 @@
                     <td>{{ voter.last_name }}, {{ voter.first_name }}</td>
 
                     <!-- title capitalizes first letter of each word -->
-                    <td>{{ voter.street_number }} {{ voter.street_name | title }},{% if voter.apartment_number %} Apt {{ voter.apartment_number }},{% endif %} Newton, MA</td>
+                    <td><a href="https://www.google.com/maps?q={{ voter.street_number }} {{ voter.street_name | title }},{% if voter.apartment_number %} Apt {{ voter.apartment_number }},{% endif %} Newton, MA">{{ voter.street_number }} {{ voter.street_name | title }},{% if voter.apartment_number %} Apt {{ voter.apartment_number }},{% endif %} Newton, MA</a></td>
 
                     <td>{{ voter.date_of_birth }}</td>
                     <td>{{ voter.date_of_registration }}</td>
@@ -50,5 +50,7 @@
                     <td>{{ voter.voter_score }}</td>
                 </tr>
             </table>
+            <!-- <a href="https://www.google.com/maps?q={{ voter.street_number }} {{ voter.street_name | title }},{% if voter.apartment_number %} Apt {{ voter.apartment_number }},{% endif %} Newton, MA">Map</a> -->
+            <!-- https://www.google.com/maps?q=193%20Oak%20St,%20Apartment%20606E,%20Newton,%20Ma -->
         </div>
 {% endblock %}
