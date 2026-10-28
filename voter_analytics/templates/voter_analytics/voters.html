@@ -40,10 +40,7 @@
                     <th>Last Name</th>
                     <th>First Name</th>
 
-                    <th>Street Number</th>
-                    <th>Street Name</th>
-                    <th>Apartment Number</th>
-                    <th>Zip Code</th>
+                    <th>Address</th>
 
                     <th>Date of Birth</th>
                     <th>Date of Registration</th>
@@ -64,10 +61,8 @@
                     <td>{{ v.last_name }}</td>
                     <td>{{ v.first_name }}</td>
 
-                    <td>{{ v.street_number }}</td>
-                    <td>{{ v.street_name }}</td>
-                    <td>{{ v.apartment_number }}</td>
-                    <td>{{ v.zip_code }}</td>
+                    <!-- title capitalizes first letter of each word -->
+                    <td>{{ v.street_number }} {{ v.street_name | title }}, Newton, MA</td>
 
                     <td>{{ v.date_of_birth }}</td>
                     <td>{{ v.date_of_registration }}</td>

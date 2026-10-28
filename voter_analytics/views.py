@@ -37,6 +37,21 @@ class VotersListView(ListView):
             if voter_score:
                 voters = voters.filter(voter_score=voter_score)
 
+        if 'v20state' in self.request.GET:
+            voters = voters.filter(v20state=True)
+
+        if 'v21town' in self.request.GET:
+            voters = voters.filter(v21town=True)
+
+        if 'v21primary' in self.request.GET:
+            voters = voters.filter(v21primary=True)
+
+        if 'v22general' in self.request.GET:
+            voters = voters.filter(v22general=True)
+
+        if 'v23town' in self.request.GET:
+            voters = voters.filter(v23town=True)
+
         return voters
 
     def get_context_data(self, **kwargs):
