@@ -37,8 +37,7 @@
         <div class="row">
             <table>
                 <tr>
-                    <th>Last Name</th>
-                    <th>First Name</th>
+                    <th>Name</th>
 
                     <th>Address</th>
 
@@ -58,11 +57,10 @@
 
                 {% for v in voters %}
                 <tr>
-                    <td>{{ v.last_name }}</td>
-                    <td>{{ v.first_name }}</td>
+                    <td><a href="{% url 'show_voter' v.pk %}">{{ v.last_name }}, {{ v.first_name }}</a></td>
 
                     <!-- title capitalizes first letter of each word -->
-                    <td>{{ v.street_number }} {{ v.street_name | title }}, Newton, MA</td>
+                    <td>{{ v.street_number }} {{ v.street_name | title }},{% if v.apartment_number %} Apt {{ v.apartment_number }},{% endif %} Newton, MA</td>
 
                     <td>{{ v.date_of_birth }}</td>
                     <td>{{ v.date_of_registration }}</td>

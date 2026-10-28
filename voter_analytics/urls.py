@@ -6,4 +6,5 @@ from .views import *
 urlpatterns = [
     path('', VotersListView.as_view(), name='home'),
     path('voters', VotersListView.as_view(), name='voters_list'),
+    path('voter/<int:pk>', VoterDetailView.as_view(), name='show_voter'),
 ]

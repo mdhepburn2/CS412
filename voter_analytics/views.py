@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.db.models.query import QuerySet
 from .models import Voter
 
@@ -75,3 +75,10 @@ class VotersListView(ListView):
         
 
         return context
+
+class VoterDetailView(DetailView):
+    '''view to show one voter'''
+
+    model = Voter
+    context_object_name = 'voter'
+    template_name = 'voter_analytics/show_voter.html'
