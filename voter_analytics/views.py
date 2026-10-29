@@ -17,7 +17,7 @@ class VoterFilterView(ListView):
 
         parties = ['U ','D ','R ','J ','A ','CC','X ','L ','Q ','S ','FF','G ','HH','T ','AA','GG','Z ','O ','P ','E ','V ','H ','Y ','W ','EE','K ']
 
-        years = [str(y) for y in range(1920,2005)]
+        years = [str(y) for y in range(1913,2005)]
         years.reverse()
 
         scores = [str(i) for i in range(0,6)]
@@ -101,17 +101,33 @@ class GraphView(VoterFilterView):
     def get_context_data(self, **kwargs):
         '''add the graphs to context'''
         context = super().get_context_data(**kwargs)
-
         voters = self.get_queryset()
-        yearsX = [i for i in range(1916,2006)]
+
+        ## make the bar plot of birth years
+        yearsX = [i for i in range(1913,2006)]
         yearsY = [voters.filter(date_of_birth__year=i).count() for i in yearsX]
 
         yearsBar = go.Bar(x=yearsX,y=yearsY)
-        title_text = f'Voter Distribution by Year of Birth (n = {voters.count()})'
+        years_title_text = f'Voter Distribution by Year of Birth (n = {voters.count()})'
         yearsDiv = plotly.offline.plot({'data': [yearsBar],
-                                      "layout_title_text": title_text},
+                                      "layout_title_text": years_title_text},
                                       auto_open=False,
                                       output_type='div')
         context['bardiv'] = yearsDiv
+
+        ## make the pie chart of parties
+        partyLabels = context.get('parties')
+        partyValues = [voters.filter(party_affiliation=party).count() for party in partyLabels]
+        party_title_text = f'Voter Distribution by Party Affiliation (n = {voters.count()})'
+
+        partyPie = go.Pie(labels=partyLabels,values=partyValues)
+        partyDiv = plotly.offline.plot(
+            {'data': [partyPie],
+             'layout_title_text': party_title_text},
+             auto_open=False,
+             output_type='div'
+        )
+        context['partyDiv'] = partyDiv
+
 
         return context
