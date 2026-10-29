@@ -8,13 +8,31 @@ import plotly.graph_objs as go
 
 # Create your views here.
 
-class VotersListView(ListView):
-    '''view to display voter data'''
-
+class VoterFilterView(ListView):
+    '''class to be inherited by anything that filters voters'''
     model = Voter
-    template_name = 'voter_analytics/voters.html'
-    context_object_name = 'voters'
-    paginate_by = 100 # how many voters per page
+    def get_context_data(self, **kwargs):
+        '''add filter queries to context'''
+        context = super().get_context_data(**kwargs)
+
+        parties = ['U ','D ','R ','J ','A ','CC','X ','L ','Q ','S ','FF','G ','HH','T ','AA','GG','Z ','O ','P ','E ','V ','H ','Y ','W ','EE','K ']
+
+        years = [str(y) for y in range(1920,2005)]
+        years.reverse()
+
+        scores = [str(i) for i in range(0,6)]
+
+        context['parties'] = parties
+        context['years'] = years
+        context['scores'] = scores
+
+        # get the query minus page so its not lost on a page turn
+        query = self.request.GET.copy()
+        query.pop('page', None)
+        context['querystring'] = query.urlencode()
+        
+
+        return context
 
     def get_queryset(self):
         '''limit the queryset'''
@@ -57,27 +75,13 @@ class VotersListView(ListView):
 
         return voters
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+class VotersListView(VoterFilterView):
+    '''view to display voter data'''
 
-        parties = ['U ','D ','R ','J ','A ','CC','X ','L ','Q ','S ','FF','G ','HH','T ','AA','GG','Z ','O ','P ','E ','V ','H ','Y ','W ','EE','K ']
-
-        years = [str(y) for y in range(1920,2005)]
-        years.reverse()
-
-        scores = [str(i) for i in range(0,6)]
-
-        context['parties'] = parties
-        context['years'] = years
-        context['scores'] = scores
-
-        # get the query minus page so its not lost on a page turn
-        query = self.request.GET.copy()
-        query.pop('page', None)
-        context['querystring'] = query.urlencode()
-        
-
-        return context
+    model = Voter
+    template_name = 'voter_analytics/voters.html'
+    context_object_name = 'voters'
+    paginate_by = 100 # how many voters per page
 
 class VoterDetailView(DetailView):
     '''view to show one voter'''
@@ -87,7 +91,7 @@ class VoterDetailView(DetailView):
     template_name = 'voter_analytics/show_voter.html'
 
 
-class GraphView(ListView):
+class GraphView(VoterFilterView):
     '''view to show graphs from aggregate data'''
 
     model = Voter
@@ -95,11 +99,12 @@ class GraphView(ListView):
     template_name = 'voter_analytics/graphs.html'
 
     def get_context_data(self, **kwargs):
+        '''add the graphs to context'''
         context = super().get_context_data(**kwargs)
 
         voters = self.get_queryset()
         yearsX = [i for i in range(1916,2006)]
-        yearsY = [Voter.objects.filter(date_of_birth__year=i).count() for i in yearsX]
+        yearsY = [voters.filter(date_of_birth__year=i).count() for i in yearsX]
 
         yearsBar = go.Bar(x=yearsX,y=yearsY)
         title_text = f'Voter Distribution by Year of Birth (n = {voters.count()})'
@@ -108,6 +113,5 @@ class GraphView(ListView):
                                       auto_open=False,
                                       output_type='div')
         context['bardiv'] = yearsDiv
-
 
         return context

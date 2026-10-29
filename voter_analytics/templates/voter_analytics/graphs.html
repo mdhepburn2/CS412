@@ -7,5 +7,6 @@
 {% extends 'voter_analytics/base.html' %}
 
 {% block content %}
+    {% include 'voter_analytics/filter.html' %}
     {{ bardiv | safe }}
 {% endblock %}
