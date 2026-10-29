@@ -1,3 +1,10 @@
+# File: models.py
+# Author: Matthew Hepburn (mhepburn@bu.edu), 10/27/2026
+# Description: Data model for the voter analytics app. Defines the Voter model
+#   (name, address, birth and registration dates, party, precinct, election
+#   participation, and voter score) and the helper functions that load the
+#   Newton voter CSV into the database.
+
 from django.db import models
 
 # Create your models here.

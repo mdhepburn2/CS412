@@ -1,0 +1,207 @@
+/*
+    File: voter-styles.css
+    Author: Matthew Hepburn (mhepburn@bu.edu)
+    Description: Stylesheet for the voter analytics app (base, voters list,
+    voter detail, graphs, and the shared filter form).
+*/
+
+/* ---------- Base ---------- */
+:root {
+    --navy: #1e3a5f;
+    --accent: #2563eb;
+    --accent-dark: #1d4ed8;
+    --bg: #f4f6f9;
+    --card: #fff;
+    --border: #d9dee5;
+    --text: #1f2937;
+    --muted: #5b6675;
+    --head: #f1f4f8;
+    --stripe: #f9fafb;
+    --hover: #eef4ff;
+    --radius: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding-bottom: 3rem;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* everything under the nav bar shares one centered column */
+body > :not(nav) {
+    width: min(1100px, calc(100% - 3rem));
+    margin-inline: auto;
+}
+
+/* page headings: Voter, Voters, Filter */
+h1, h2 {
+    margin-block: 1.5rem 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 4px solid var(--accent);
+    color: var(--navy);
+    font-size: 1.35rem;
+    line-height: 1.2;
+}
+
+/* site title (first h1 in base.html) becomes the header banner above the nav */
+body > h1:first-child {
+    width: auto;
+    margin: 0;
+    padding: 1.25rem max(1.5rem, calc((100% - 1100px) / 2)) 0.25rem;
+    border: 0;
+    background: var(--navy);
+    color: #fff;
+    font-size: 1.75rem;
+    letter-spacing: 0.02em;
+}
+
+a { color: var(--accent); }
+a:hover { color: var(--accent-dark); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- Top nav (base.html) ---------- */
+/* padding lines the link text up with the site title above it */
+body > nav {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.25rem max(0.6rem, calc((100% - 1100px) / 2 - 0.9rem)) 0.75rem;
+    background: var(--navy);
+    border-bottom: 3px solid var(--accent);
+}
+
+body > nav a {
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    color: #dbe5f3;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+/* hover: white pill with navy text (the global a:hover color was dark blue on navy) */
+body > nav a:hover { background: #fff; color: var(--navy); }
+body > nav a:focus-visible { outline-color: #fff; }
+
+/* ---------- Filter form (filter.html, used on voters + graphs) ---------- */
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 2.5rem;
+    padding: 1.25rem 1.5rem;
+    margin-block: 0 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+/* stack the two tables only on narrow screens */
+@media (max-width: 600px) {
+    form { grid-template-columns: 1fr; }
+}
+
+form table { width: 100%; border-collapse: collapse; align-self: start; }
+
+form th {
+    width: 1%;
+    padding: 0.35rem 1rem 0.35rem 0;
+    text-align: left;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+form td { padding: 0.35rem 0; }
+
+select {
+    width: 100%;
+    padding: 0.4rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fff;
+    color: inherit;
+    font: inherit;
+}
+
+input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    vertical-align: middle;
+    accent-color: var(--accent);
+}
+
+input[type="submit"] {
+    grid-column: 1 / -1;
+    justify-self: start;
+    padding: 0.5rem 1.5rem;
+    border: 0;
+    border-radius: 6px;
+    background: var(--accent);
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover { background: var(--accent-dark); }
+
+/* ---------- Pagination (voters.html) ---------- */
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-block: 0 1rem;
+}
+
+.pagination a {
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card);
+    text-decoration: none;
+}
+
+.pagination a:hover { background: var(--hover); }
+.pagination .current { padding: 0 0.5rem; color: var(--muted); }
+
+/* ---------- Tables (voters list + voter detail) ---------- */
+.row {
+    overflow-x: auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.row table { width: 100%; border-collapse: collapse; }
+
+.row th, .row td {
+    padding: 0.6rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.row th {
+    background: var(--head);
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* detail page: th is the label column next to its td */
+.row th:has(+ td) { width: 14rem; }
+
+.row tr:last-child > * { border-bottom: 0; }
+.row tr:nth-child(even) td { background: var(--stripe); }
+.row tr:hover td { background: var(--hover); }
+
+/* ---------- Graphs (graphs.html, plotly output) ---------- */
+.plotly-graph-div {
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}

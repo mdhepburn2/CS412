@@ -1,3 +1,10 @@
+# File: views.py
+# Author: Matthew Hepburn (mhepburn@bu.edu), 10/27/2026
+# Description: Views for the voter analytics app. Includes a shared filter view that
+#   handles the search form and pagination querystring, a paginated voter list,
+#   a single voter detail page, and a graph page that builds Plotly charts
+#   (birth year, party affiliation, and election participation) from the filtered voters.
+
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.db.models.query import QuerySet
@@ -129,7 +136,7 @@ class GraphView(VoterFilterView):
         )
         context['partyDiv'] = partyDiv
 
-                ## make the bar chart of election vote counts
+        ## make the bar chart of election vote counts
         electionsX = ['v20state','v21town','v21primary','v22general','v23town']
         electionsY = [voters.filter(v20state=True).count()]
         electionsY += [voters.filter(v21town=True).count()]
