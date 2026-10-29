@@ -129,5 +129,24 @@ class GraphView(VoterFilterView):
         )
         context['partyDiv'] = partyDiv
 
+                ## make the bar chart of election vote counts
+        electionsX = ['v20state','v21town','v21primary','v22general','v23town']
+        electionsY = [voters.filter(v20state=True).count()]
+        electionsY += [voters.filter(v21town=True).count()]
+        electionsY += [voters.filter(v21primary=True).count()]
+        electionsY += [voters.filter(v22general=True).count()]
+        electionsY += [voters.filter(v23town=True).count()]
+
+        elections_title_text = f'Vote Count by Election (n = {voters.count()})'
+
+        electionsBar = go.Bar(x=electionsX, y=electionsY)
+        electionsDiv = plotly.offline.plot(
+            {'data': [electionsBar],
+             'layout_title_text': elections_title_text},
+            auto_open=False,
+            output_type='div'
+        )
+        context['electionsDiv'] = electionsDiv
+
 
         return context
