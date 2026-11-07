@@ -1,0 +1,14 @@
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+    <h3>All Jokes</h3>
+    <ul>
+        {% for joke in jokes %}
+        <li>
+            <p>{{joke.text | linebreaksbr}}</p>
+            <p>Joke by: {{joke.name}}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}

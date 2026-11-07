@@ -1,0 +1,12 @@
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+    <h3>All Pictures</h3>
+    
+    <table>
+        {% for picture in pictures %}
+        <img src="{{picture.image_url}}" alt="" style="width: 100%; max-width: 300px; height: auto;">
+        {% endfor %}
+    </table>
+    
+{% endblock %}

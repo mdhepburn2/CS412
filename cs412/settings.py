@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "restaurant",
     "mini_insta",
     "voter_analytics",
+    'rest_framework',
+    'dadjokes',
 ]
 
 MIDDLEWARE = [
@@ -152,3 +154,9 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/mhepburn/static/'
     MEDIA_URL = '/mhepburn/media/'
+
+
+REST_FRAMEWORK = {
+  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+  'PAGE_SIZE': 10
+}

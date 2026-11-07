@@ -1,0 +1,8 @@
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+    <h3>Picture</h3>
+    <img src="{{picture.image_url}}" alt="" style="width: 100%; max-width: 300px; height: auto;">
+    <p>Published by: {{picture.name}}</p>
+    <p>Date: {{picture.timestamp}}</p>
+{% endblock %}
