@@ -51,12 +51,11 @@ class PictureDetailView(DetailView):
 
 class RandomJokeAPIView(generics.RetrieveAPIView):
     '''API view to return a random joke'''
-    queryset = rand.choice(Joke.objects.all())
     serializer_class = JokeSerializer
 
     def get_object(self):
         '''override get object to show the random selection'''
-        return self.queryset
+        return rand.choice(Joke.objects.all())
 
 class JokeListAPIView(generics.ListCreateAPIView):
     '''An api view to show all jokes and to create a joke'''
@@ -70,12 +69,11 @@ class JokeDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 class RandomPictureView(generics.RetrieveAPIView):
     '''API view to return a random picture'''
-    queryset = rand.choice(Picture.objects.all())
     serializer_class = PictureSerializer
 
     def get_object(self):
         '''override get object to show the random selection'''
-        return self.queryset
+        return rand.choice(Picture.objects.all())
 
 class PictureListAPIView(generics.ListCreateAPIView):
     '''api view to show all pictures'''
