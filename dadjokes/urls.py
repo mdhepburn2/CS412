@@ -13,11 +13,11 @@ urlpatterns = [
     path('picture/<int:pk>', PictureDetailView.as_view(), name='show_picture'),
 
     # api urls
-    path('api/', RandomJokeAPIView.as_view()),
-    path('api/random/', RandomJokeAPIView.as_view()),
-    path('api/jokes/', JokeListAPIView.as_view()),
+    path('api', RandomJokeAPIView.as_view()),
+    path('api/random', RandomJokeAPIView.as_view()),
+    path('api/jokes', JokeListAPIView.as_view()),
     path('api/joke/<int:pk>', JokeDetailAPIView.as_view()),
     path('api/pictures', PictureListAPIView.as_view()),
     path('api/picture/<int:pk>', PictureDetailAPIView.as_view()),
-    path('api/random_picture/', RandomPictureView.as_view()),
+    path('api/random_picture', RandomPictureView.as_view()),
 ]
