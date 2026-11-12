@@ -1,3 +1,7 @@
+# File: models.py
+# Author: Matthew Hepburn, 11/11/2026
+# Description: holds the jokes and pictures for dadjokes 
+
 from django.db import models
 
 # Create your models here.

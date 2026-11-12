@@ -1,3 +1,7 @@
+# File: views.py
+# Author: Matthew Hepburn, 11/11/2026
+# Description: views file that renders pages and api 
+
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from django.views.generic import DetailView, ListView

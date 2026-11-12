@@ -1,3 +1,7 @@
+# File: serializers.py
+# Author: Matthew Hepburn, 11/11/2026
+# Description: holds serializer information for the api
+
 from rest_framework import serializers
 from .models import *
 
