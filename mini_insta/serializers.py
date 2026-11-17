@@ -25,7 +25,8 @@ class ProfileSerializer(serializers.ModelSerializer):
             # 'all_posts',
             'num_followers',
             'num_following',
-            'num_posts'
+            'num_posts',
+            'pk',
         ]
 
     # def get_all_posts(self, obj):
@@ -34,6 +35,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     '''A serializer for the post model'''
     all_photos = serializers.SerializerMethodField()
+    first_photo = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
@@ -42,10 +44,16 @@ class PostSerializer(serializers.ModelSerializer):
             'timestamp',
             'caption',
             'all_photos',
+            'first_photo',
+            'pk',
         ]
 
     def get_all_photos(self, obj):
         return PhotoSerializer(obj.get_all_photos(), many=True).data
+
+    def get_first_photo(self, obj):
+        return PhotoSerializer(obj.get_first_photo()).data
+
 
 class PhotoSerializer(serializers.ModelSerializer):
     '''A serializer for the photo model'''

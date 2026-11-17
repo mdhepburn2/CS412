@@ -382,6 +382,11 @@ class PostListAPIView(generics.ListAPIView):
         profile = Profile.objects.get(pk=pk)
         return self.queryset.filter(profile=profile)
 
+class PostDetailAPIView(generics.RetrieveAPIView):
+    '''api view to show a specific post'''
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
 class FeedAPIView(generics.ListAPIView):
     '''api view to get a users feed'''
     serializer_class = PostSerializer

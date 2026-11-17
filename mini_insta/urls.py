@@ -40,6 +40,7 @@ urlpatterns = [
     path('api/profile/<int:pk>/posts', PostListAPIView.as_view()),
     path('api/profile/<int:pk>/feed', FeedAPIView.as_view()),
     path('api/profiles', ProfileListAPIView.as_view()),
+    path('api/post/<int:pk>', PostDetailAPIView.as_view()),
 
     
 ]
