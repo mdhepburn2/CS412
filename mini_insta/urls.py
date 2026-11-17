@@ -34,5 +34,12 @@ urlpatterns = [
     path(r'login/', auth_views.LoginView.as_view(template_name='mini_insta/login.html'), name='login'),
     path(r'logout/', auth_views.LogoutView.as_view(next_page='show_all_profiles'), name='logout'),
     path(r'create_profile/', CreateProfileView.as_view(), name='create_profile'),
+
+    # API urls
+    path('api/profile/<int:pk>', ProfileDetailAPIView.as_view()),
+    path('api/profile/<int:pk>/posts', PostListAPIView.as_view()),
+    path('api/profile/<int:pk>/feed', FeedAPIView.as_view()),
+    path('api/profiles', ProfileListAPIView.as_view()),
+
     
 ]

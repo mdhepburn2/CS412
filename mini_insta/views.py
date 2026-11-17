@@ -13,6 +13,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 
+from .serializers import *
+from rest_framework import generics
+
 
 class InstaLRM(LoginRequiredMixin):
     '''subclass for repetitive methods of login required mixin'''
@@ -352,3 +355,38 @@ class NewCommentView(TemplateView):
         comment = Comment.objects.create(text=text,profile=profile,post=post)
 
         return redirect('show_post', pk=pk)
+
+
+
+#
+## API views
+#
+
+class ProfileDetailAPIView(generics.RetrieveAPIView):
+    '''api view to show a specific profile'''
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class ProfileListAPIView(generics.ListAPIView):
+    '''api view to show all profiles'''
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class PostListAPIView(generics.ListAPIView):
+    '''api view to show all posts for a profile'''
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)
+        return self.queryset.filter(profile=profile)
+
+class FeedAPIView(generics.ListAPIView):
+    '''api view to get a users feed'''
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)
+        return profile.get_post_feed()
