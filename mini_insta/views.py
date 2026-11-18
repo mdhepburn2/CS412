@@ -20,6 +20,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import *
+from rest_framework.exceptions import PermissionDenied
 
 
 class InstaLRM(LoginRequiredMixin):
@@ -369,16 +370,22 @@ class NewCommentView(TemplateView):
 
 class ProfileDetailAPIView(generics.RetrieveAPIView):
     '''api view to show a specific profile'''
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
 class ProfileListAPIView(generics.ListAPIView):
     '''api view to show all profiles'''
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
-class PostListAPIView(generics.ListAPIView):
+class PostListAPIView(generics.ListCreateAPIView):
     '''api view to show all posts for a profile'''
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
@@ -387,18 +394,37 @@ class PostListAPIView(generics.ListAPIView):
         profile = Profile.objects.get(pk=pk)
         return self.queryset.filter(profile=profile)
 
+    def perform_create(self, serializer):
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+
+        # the profile in the URL must belong to whoever's token is on the request
+        if profile.user != self.request.user:
+            raise PermissionDenied("You can only create posts on your own profile.")
+
+        # set the profile server-side so the client can't pass a different one
+        serializer.save(profile=profile)
+
 class PostDetailAPIView(generics.RetrieveAPIView):
     '''api view to show a specific post'''
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 class FeedAPIView(generics.ListAPIView):
     '''api view to get a users feed'''
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     serializer_class = PostSerializer
 
     def get_queryset(self):
         pk = self.kwargs['pk']
         profile = Profile.objects.get(pk=pk)
+
+        # the feed is private: the profile in the URL must belong to the token's user
+        if profile.user != self.request.user:
+            raise PermissionDenied("You can only view your own feed.")
+
         return profile.get_post_feed()
 
 class UserRegistrationView(generics.CreateAPIView):

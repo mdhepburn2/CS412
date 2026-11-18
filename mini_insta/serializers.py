@@ -47,12 +47,19 @@ class PostSerializer(serializers.ModelSerializer):
             'first_photo',
             'pk',
         ]
+        # profile is set server-side in PostListAPIView.perform_create,
+        # so the client must not be required to (or allowed to) send it
+        read_only_fields = ['profile', 'timestamp', 'pk']
 
     def get_all_photos(self, obj):
         return PhotoSerializer(obj.get_all_photos(), many=True).data
 
     def get_first_photo(self, obj):
-        return PhotoSerializer(obj.get_first_photo()).data
+        first = obj.get_first_photo()
+        # a newly created post has no photos yet
+        if first is None:
+            return None
+        return PhotoSerializer(first).data
 
 
 class PhotoSerializer(serializers.ModelSerializer):
