@@ -52,9 +52,11 @@ class PostSerializer(serializers.ModelSerializer):
         read_only_fields = ['profile', 'timestamp', 'pk']
 
     def get_all_photos(self, obj):
+        '''call the get all photos method from post model'''
         return PhotoSerializer(obj.get_all_photos(), many=True).data
 
     def get_first_photo(self, obj):
+        '''call the get first photo method from post model'''
         first = obj.get_first_photo()
         # a newly created post has no photos yet
         if first is None:
@@ -83,9 +85,9 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'password']
 
-    def create(self, validated_data):
-        user = User.objects.create_user(
-            username=validated_data['username'],
-            password=validated_data['password'],
-        )
-        return user
+    # def create(self, validated_data):
+    #     user = User.objects.create_user(
+    #         username=validated_data['username'],
+    #         password=validated_data['password'],
+    #     )
+    #     return user

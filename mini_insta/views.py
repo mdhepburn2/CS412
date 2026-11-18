@@ -390,11 +390,13 @@ class PostListAPIView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
+        '''override get queryset to get all posts from a user'''
         pk = self.kwargs['pk']
         profile = Profile.objects.get(pk=pk)
         return self.queryset.filter(profile=profile)
 
     def perform_create(self, serializer):
+        '''make sure the user only creates a post on their profile'''
         profile = Profile.objects.get(pk=self.kwargs['pk'])
 
         # the profile in the URL must belong to whoever's token is on the request
@@ -422,6 +424,7 @@ class FeedAPIView(generics.ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
+        '''make sure the logged in user is the one looking at their feed'''
         pk = self.kwargs['pk']
         profile = Profile.objects.get(pk=pk)
 
@@ -438,6 +441,7 @@ class UserRegistrationView(generics.CreateAPIView):
 class UserLoginView(APIView):
     '''view to login a user'''
     def post(self, request):
+        '''authenticate a login from post'''
         username = request.data.get('username')
         password = request.data.get('password')
         user = authenticate(username=username, password=password)  # Authenticate the user
