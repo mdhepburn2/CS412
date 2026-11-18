@@ -402,7 +402,11 @@ class PostListAPIView(generics.ListCreateAPIView):
             raise PermissionDenied("You can only create posts on your own profile.")
 
         # set the profile server-side so the client can't pass a different one
-        serializer.save(profile=profile)
+        post = serializer.save(profile=profile)
+
+        # attach any uploaded images (multipart key 'files') to the new post
+        for file in self.request.FILES.getlist('files'):
+            Photo.objects.create(post=post, image_file=file)
 
 class PostDetailAPIView(generics.RetrieveAPIView):
     '''api view to show a specific post'''
