@@ -11,10 +11,15 @@ from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 
 from .serializers import *
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import *
 
 
 class InstaLRM(LoginRequiredMixin):
@@ -395,3 +400,25 @@ class FeedAPIView(generics.ListAPIView):
         pk = self.kwargs['pk']
         profile = Profile.objects.get(pk=pk)
         return profile.get_post_feed()
+
+class UserRegistrationView(generics.CreateAPIView):
+    '''view to register a new user'''
+    serializer_class = UserSerializer
+
+class UserLoginView(APIView):
+    '''view to login a user'''
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)  # Authenticate the user
+        if user is not None:
+            token, created = Token.objects.get_or_create(user=user)  # Create or retrieve a token for the user
+            profile = Profile.objects.get(user=user)
+            return Response({
+                'token': token.key,
+                'user': {'id': user.pk, 'username': user.username},
+                'profile': ProfileSerializer(profile).data
+                }, 
+                status=status.HTTP_200_OK
+            )
+        return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
