@@ -36,6 +36,7 @@ class PostSerializer(serializers.ModelSerializer):
     '''A serializer for the post model'''
     all_photos = serializers.SerializerMethodField()
     first_photo = serializers.SerializerMethodField()
+    profile_json = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
@@ -46,6 +47,7 @@ class PostSerializer(serializers.ModelSerializer):
             'all_photos',
             'first_photo',
             'pk',
+            'profile_json'
         ]
         # profile is set server-side in PostListAPIView.perform_create,
         # so the client must not be required to (or allowed to) send it
@@ -62,6 +64,10 @@ class PostSerializer(serializers.ModelSerializer):
         if first is None:
             return None
         return PhotoSerializer(first).data
+
+    def get_profile_json(self,obj):
+        '''get the attributes from the posters profile'''
+        return ProfileSerializer(obj.profile).data
 
 
 class PhotoSerializer(serializers.ModelSerializer):
