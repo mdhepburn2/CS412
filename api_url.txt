@@ -1,1 +1,2 @@
 https://cs-webapps.bu.edu/mhepburn/dadjokes/api/
+https://cs-webapps.bu.edu/mhepburn/mini_insta/api/
